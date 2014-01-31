@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageHackDay_TwoFactorAuth>
+            <active>true</active>
+            <codePool>community</codePool>
+        </MageHackDay_TwoFactorAuth>
+    </modules>
+</config>
