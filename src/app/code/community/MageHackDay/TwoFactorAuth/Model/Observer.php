@@ -9,19 +9,19 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
 		$event 		= $observer->getEvent();
 		$username 	= $event->getUsername();
 		$user 		= $event->getUser();
-		$result		= $event->getResult();
 		
-		if($result) {
+		if($user->getId()) {
+			/* is two factor authentication activated for this admin user */
 			if($user->getData("twofactorauth")) {
-				Mage::log("doTwoFactorAuth2");
+				Mage::log("*** doTwoFactorAuth");
 				
-				//Two Factor Authentication not successfull
-				//$result = false;
-				$observer->getEvent()->setData('result', false);
-				//Mage::throwException(Mage::helper('twofactorauth')->__('Two Factor Authentication not successfull'));
+				$auth = Mage::getModel('twofactorauth/authenticator');
+				$auth->getToken($username);
+				
+				//process with check
 			}
 		}
 		
-		return $observer;
+		return $this;
 	}
 }
