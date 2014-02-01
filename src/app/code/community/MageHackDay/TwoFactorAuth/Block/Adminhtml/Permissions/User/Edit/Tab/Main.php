@@ -11,7 +11,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Permissions_User_Edit_Tab_Main e
 		$fieldset = $form->addFieldset('ga2fa_fieldset', array('legend'=>$this->__('Two Factor Authentication')));
 		
 		$fieldset->addField('twofactorauth', 'select', array(
-          'label'     => $this->__('Use Google Authenticator'),
+          'label'     => Mage::helper('twofactorauth')->__('Use Google Authenticator'),
           'class'     => 'required-entry',
           'required'  => true,
           'name'      => 'twofactorauth',

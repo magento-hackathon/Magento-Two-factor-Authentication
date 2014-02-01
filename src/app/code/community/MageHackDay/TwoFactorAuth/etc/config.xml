@@ -21,6 +21,11 @@
 				</rewrite>
 			</adminhtml>
 		</blocks>
+		<helpers>
+        	<twofactorauth>
+                <class>MageHackDay_TwoFactorAuth_Helper</class>
+            </twofactorauth>
+        </helpers>
 		<resources>
 			<twofactorauth_setup>
 				<setup>
@@ -29,4 +34,17 @@
 			</twofactorauth_setup>
 		</resources>
 	</global>
+	<adminhtml>
+		<events>
+			<admin_user_authenticate_after>
+				<observers>
+                    <twofactorauth_user_authenticate_after>
+                    	<type>singleton</type>
+                        <class>twofactorauth/observer</class>
+                        <method>adminUserAuthenticateAfter</method>
+                    </twofactorauth_user_authenticate_after>
+                </observers>
+			</admin_user_authenticate_after>
+		</events>
+	</adminhtml>
 </config>
