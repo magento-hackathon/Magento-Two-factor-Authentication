@@ -2,3 +2,4 @@ src/app/code/community/MageHackDay/TwoFactorAuth/ app/code/community/MageHackDay
 src/app/etc/modules/MageHackDay_TwoFactorAuth.xml app/etc/modules/MageHackDay_TwoFactorAuth.xml
 #src/lib/google2fa	lib/google2fa
 src/lib/ga4php	lib/ga4php
+src/lib/GoogleAuthenticator lib/GoogleAuthenticator
