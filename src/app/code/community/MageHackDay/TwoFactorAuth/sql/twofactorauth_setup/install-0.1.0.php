@@ -5,10 +5,8 @@ $installer = $this;
 $installer->startSetup();
 
 // Add reset password link token column
-$installer->getConnection()->addColumn($installer->getTable('admin/user'), 'twofactorauth_token', array(
+$installer->getConnection()->addColumn($installer->getTable('admin/user'), 'twofactor_token', array(
     'type' => Varien_Db_Ddl_Table::TYPE_TEXT,
-    'nullable'  => true,
-    'default'   => '0',
     'comment' => 'Google Authenticator Token'
 ));
 
