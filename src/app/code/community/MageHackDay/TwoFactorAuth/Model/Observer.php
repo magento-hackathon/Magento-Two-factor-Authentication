@@ -90,15 +90,27 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
         }
     }
 
+    /**
+     * @todo Store the original after auth url so we can redirect the user after entering their 2fa code
+     *
+     * @param $observer
+     */
     public function customerAuthenticateAfter($observer)
     {
         $customer = $observer->getEvent()->getModel();
 
         if($customer->getTwofactorauthToken()) {
             $redirectUrl = Mage::getModel("core/url")->getUrl("twofactorauth/interstitial");
-            Mage::app()->getFrontController()->getResponse()
-                ->setRedirect($redirectUrl)
-                ->sendResponse();
+            $session = $this->_getSession();
+
+            $session->setOriginalAfterAuthUrl($session->getAfterAuthUrl());
+
+            $session->setAfterAuthUrl($redirectUrl);
         }
+    }
+
+    protected function _getSession()
+    {
+        return Mage::getSingleton('customer/session');
     }
 }

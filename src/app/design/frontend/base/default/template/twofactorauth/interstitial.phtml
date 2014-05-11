@@ -1,0 +1,18 @@
+<form method="post" action="<?php echo $this->getSaveUrl(); ?>" id="loginForm">
+    <fieldset class="login-form">
+        <h2><?php echo Mage::helper('twofactorauth')->__('Please enter your One Time Password'); ?></h2>
+        <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('twofactorauth')->__('Code:'); ?></label><br />
+            <input type="text" id="code" name="code" value="" class="required-entry input-text" />
+        </div>
+        <?php echo $this->getChildHtml('form.additional.info'); ?>
+        <div class="clear"></div>
+        <div class="form-buttons">
+            <a class="left" href="<?php echo $this->getUrl('customer/account/login'); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back to Login'); ?></a>
+            <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Verify Code'); ?></span></span></span></button>
+        </div>
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+    var loginForm = new VarienForm('loginForm');
+</script>
