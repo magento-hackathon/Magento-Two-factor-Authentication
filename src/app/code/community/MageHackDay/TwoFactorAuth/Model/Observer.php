@@ -27,7 +27,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
 
     public function verifySecret($observer)
     {
-        require_once (Mage::getBaseDir('lib') . DS . 'GoogleAuthenticator' . DS . 'PHPGangsta' . DS . 'GoogleAuthenticator.php');
+        $authHelper = Mage::helper('twofactorauth/auth');
 
         $code = Mage::app()->getRequest()->getParam('twofactorauth_code');
         $secret = Mage::app()->getRequest()->getParam('twofactorauth_secret');
@@ -37,10 +37,8 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
             return;
         }
 
-        $ga = new PHPGangsta_GoogleAuthenticator();
-
         // Success
-        if ($ga->verifyCode($secret, $code, 2)) {
+        if ($authHelper->verifyCode($code, $secret)) {
             $userId = Mage::getSingleton('admin/session')->getUser()->getId();
             $user = Mage::getModel('admin/user')
                 ->load($userId);

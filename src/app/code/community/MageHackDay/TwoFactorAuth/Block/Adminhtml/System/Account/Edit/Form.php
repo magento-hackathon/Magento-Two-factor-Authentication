@@ -14,9 +14,9 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
             ->load($userId);
 
         // Create a new secret each page load, even if it's not being used
-        $ga = new PHPGangsta_GoogleAuthenticator();
-        $secret = $ga->createSecret();
-        $qrCodeUrl = $ga->getQRCodeGoogleUrl('Magento', $secret);
+        $authHelper = Mage::helper('twofactorauth/auth');
+        $secret = $authHelper->createSecret();
+        $qrCodeUrl = $authHelper->getQrCodeImageUrl('Magento', $secret);
 
         $form = $this->getForm();
 
