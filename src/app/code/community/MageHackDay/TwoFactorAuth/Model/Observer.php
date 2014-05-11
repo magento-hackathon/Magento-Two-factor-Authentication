@@ -31,10 +31,11 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
                 Mage::log('User is missing required TFA secret');
                 $vMessage = Mage::helper('twofactorauth')->__('Please connect your Two Factor Authentication before accessing restricted admin functionality');
                 Mage::getSingleton('adminhtml/session')->addError($vMessage);
-                Mage::getSingleton('admin/session')->setTfaRequired(true);
+                Mage::getSingleton('adminhtml/session')->setTfaNotAssociated(true);
                 $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/system_account/index");
             }
             else{
+                Mage::getSingleton('adminhtml/session')->setTfaNotEntered(true);
                 $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/twofactorauth/interstitial");
             }
             $oResponse->setRedirect($vRedirectUrl);
@@ -76,17 +77,33 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
 
     /**
      * Listens for the adminhtml_controller_action_predispatch_start Event to
-     * check if an Admin that was sent to My Account to associate a Two Factor Auth
-     * is attempting to navigate away without saving the required secret for TFA
+     * check if an Admin that was sent to either:
+     *   (a) My Account to associate a Two Factor Auth, or
+     *   (b) interstitial page to enter their TFA value
+     * is attempting to navigate away without performing the necessary TFA action
      *
      * @param $oObserver
      */
     public function checkTfaSubmitted($oObserver){
-        $bTfaStillRequired = Mage::getSingleton('admin/session')->getTfaRequired();
-        if($bTfaStillRequired && Mage::app()->getRequest()->getActionName() != 'logout'){
+        if(Mage::app()->getRequest()->getActionName() != 'logout'){
+            return $this;
+        }
+        $vRedirectUrl = '';
+        if(Mage::getSingleton('adminhtml/session')->getTfaNotAssociated()){
             $vMessage = Mage::helper('twofactorauth')->__('Please connect your Two Factor Authentication before accessing restricted admin functionality');
             Mage::getSingleton('adminhtml/session')->addError($vMessage);
             $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/system_account/index");
+        }
+        else if (Mage::getSingleton('adminhtml/session')->getTfaNotEntered()){
+            $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/twofactorauth/interstitial");
+        }
+        if($vRedirectUrl){
+            $oRequest = Mage::app()->getRequest();
+            $vAction = $oRequest->getActionName();
+            Mage::app()->getFrontController()->getAction()->setFlag($vAction, Mage_Core_Controller_Varien_Action::FLAG_NO_DISPATCH, true);
+            $oResponse = Mage::app()->getResponse();
+            $oResponse->setRedirect($vRedirectUrl);
+            $oResponse->sendResponse();
         }
     }
 
