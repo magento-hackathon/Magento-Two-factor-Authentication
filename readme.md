@@ -43,4 +43,5 @@ How to use it:
 
 TBD:
 -
-Write docs about how to install this extension to  your Magento with composer.
+- Add unit tests for models, helpers, possibly for controllers
+- Write docs about how to install this extension to  your Magento with composer.
