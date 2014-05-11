@@ -2,17 +2,17 @@
 
 class MageHackDay_TwoFactorAuth_Model_Observer {
 
-	/**
-	 * Listens to the admin_user_authenticate_after Event and checks whether the user has access to areas that are configured
+    /**
+     * Listens to the admin_user_authenticate_after Event and checks whether the user has access to areas that are configured
      * to be protected by Two Factor Auth. If so, send the user to either add a Two Factor Auth to their Account, or enter a
      * code from their connected Auth provider
      *
-	 */
-	public function adminUserAuthenticateAfter($observer) {
-		$event 		= $observer->getEvent();
-		$username 	= $event->getUsername();
+     */
+    public function adminUserAuthenticateAfter($observer) {
+        $event 		= $observer->getEvent();
+        $username 	= $event->getUsername();
         /** @var $user Mage_Admin_Model_User */
-		$user 		= $event->getUser();
+        $user 		= $event->getUser();
         $oRole = $user->getRole();
         $aResources = $oRole->getResourcesList2D();
         $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');
@@ -38,9 +38,11 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
                 $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/twofactorauth/interstitial");
             }
             $oResponse->setRedirect($vRedirectUrl);
+            $oResponse->sendResponse();
+            exit();
         }
-		return $this;
-	}
+        return $this;
+    }
 
     public function verifySecret($observer)
     {
