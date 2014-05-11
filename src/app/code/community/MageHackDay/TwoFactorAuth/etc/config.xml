@@ -34,6 +34,17 @@
 			</twofactorauth_setup>
 		</resources>
 	</global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <twofactor before="Mage_Adminhtml">MageHackDay_TwoFactorAuth_Adminhtml</twofactor>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 	<adminhtml>
 		<events>
 			<admin_user_authenticate_after>
@@ -46,5 +57,19 @@
                 </observers>
 			</admin_user_authenticate_after>
 		</events>
+        <layout>
+            <updates>
+                <twofactorauth>
+                    <file>twofactor.xml</file>
+                </twofactorauth>
+            </updates>
+        </layout>
 	</adminhtml>
+    <default>
+        <admin>
+            <security>
+                <twofactorauth_protected_resources>a:2:{i:0;s:17:"admin/sales/order";i:1;s:12:"admin/system";}</twofactorauth_protected_resources>
+            </security>
+        </admin>
+    </default>
 </config>
