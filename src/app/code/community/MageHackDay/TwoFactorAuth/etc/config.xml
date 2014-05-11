@@ -85,6 +85,24 @@
             </updates>
         </layout>
     </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <twofactorauth>
+                    <file>twofactorauth.xml</file>
+                </twofactorauth>
+            </updates>
+        </layout>
+        <routers>
+            <twofactorauth>
+                <use>standard</use>
+                <args>
+                    <module>MageHackDay_TwoFactorAuth</module>
+                    <frontName>twofactorauth</frontName>
+                </args>
+            </twofactorauth>
+        </routers>
+    </frontend>
     <default>
         <admin>
             <security>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="twofactorauth">
+                <name>twofactorauth</name>
+                <path>twofactorauth/customer/configure</path>
+                <label>Two Factor Authentication</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <twofactorauth_customer_configure>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="twofactorauth/configure" name="customer.twofactorauth" template="twofactorauth/customer/configure.phtml"/>
+        </reference>
+    </twofactorauth_customer_configure>
+</layout>
