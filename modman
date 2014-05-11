@@ -1,3 +1,4 @@
 src/app/code/community/MageHackDay/TwoFactorAuth/ app/code/community/MageHackDay/TwoFactorAuth/
 src/app/etc/modules/MageHackDay_TwoFactorAuth.xml app/etc/modules/MageHackDay_TwoFactorAuth.xml
+src/app/design/adminhtml/default/default/twofactor.xml app/design/adminhtml/default/default/twofactor.xml
 src/lib/GoogleAuthenticator lib/GoogleAuthenticator
