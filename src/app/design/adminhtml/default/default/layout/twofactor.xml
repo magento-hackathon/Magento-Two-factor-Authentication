@@ -3,7 +3,7 @@
 
     <adminhtml_twofactorauth_interstitial>
         <block type="core/text_list" name="root" output="toHtml">
-            <block type="adminhtml/template" name="content" template="interstitial.phtml">
+            <block type="adminhtml/template" name="content" template="twofactor/interstitial.phtml">
                 <block type="core/text_list" name="form.additional.info" />
             </block>
         </block>
