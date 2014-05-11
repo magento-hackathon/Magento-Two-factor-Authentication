@@ -32,7 +32,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Config_AdminResource exte
     public function _prepareToRender()
     {
         $this->oProtectedResourceSelect = null;
-        $this->addColumn('event_name', array(
+        $this->addColumn('resource_id', array(
             'label' => Mage::helper('twofactorauth')->__('Resource Id'),
             'renderer'=> $this->getProtectedResourceSelect(),
         ));
@@ -44,7 +44,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Config_AdminResource exte
     {
         $row->setData(
             'option_extra_attr_' . $this->getProtectedResourceSelect()->calcOptionHash(
-                $row->getEventName()),
+                $row->getResourceId()),
             'selected="selected"'
         );
     }
