@@ -44,21 +44,21 @@
 <body id="page-login">
 <div class="login-container">
     <div class="login-box">
-        <form method="post" action="" id="loginForm">
+        <form method="post" action="<?php echo $this->getUrl('adminhtml/twofactorauth/verify') ?>" id="loginForm">
             <fieldset class="login-form">
                 <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
                 <h2><?php echo Mage::helper('adminhtml')->__('Please enter your One Time Password'); ?></h2>
                 <div id="messages">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
                 </div>
-                <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('adminhtml')->__('Email Address:'); ?></label><br />
-                    <input type="text" id="email" name="email" value="" class="required-entry input-text forgot-password validate-email" style="width:461px;" />
+                <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('adminhtml')->__('Security Code'); ?></label><br />
+                    <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text" style="width:461px;" />
                 </div>
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
                 <div class="clear"></div>
                 <div class="form-buttons">
                     <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('adminhtml')->__('Back to Login'); ?></a>
-                    <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Retrieve Password'); ?></span></span></span></button>
+                    <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Submit Code'); ?></span></span></span></button>
                 </div>
             </fieldset>
             <p class="legal"><?php echo Mage::helper('adminhtml')->__('Magento is a trademark of Magento Inc. Copyright &copy; %s Magento Inc.', date('Y')); ?></p>
