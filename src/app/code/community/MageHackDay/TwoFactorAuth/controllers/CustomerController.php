@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * Class MageHackDay_TwoFactorAuth_CustomerController
+ * TODO add class documentation
+ */
 class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_Front_Action
 {
+    /**
+     * TODO add method docs
+     * @return Mage_Core_Controller_Front_Action|void
+     */
     public function preDispatch()
     {
         parent::preDispatch();
@@ -10,12 +18,19 @@ class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_
         }
     }
 
+    /**
+     * TODO add method docs
+     */
     public function configureAction()
     {
         $this->loadLayout();
         $this->renderLayout();
     }
 
+    /**
+     * TODO add method docs
+     * @return Mage_Core_Controller_Varien_Action
+     */
     public function saveAction()
     {
         if (!$this->_validateFormKey()) {

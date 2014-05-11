@@ -23,3 +23,10 @@ Todo:
 - Integrate Google QR-Code-Generator
 `http://www.google.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth://totp/idontplaydarts?secret=SECRETVALUEHERE`
 
+
+How to use it:
+-
+- Install Google Authenticator app
+- Scan the QR code under your profile in Magento backend (system->my account)
+- Enter the code the field...
+- TBD...
