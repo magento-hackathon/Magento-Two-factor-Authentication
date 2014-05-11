@@ -11,16 +11,20 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
         /** @var $user Mage_Admin_Model_User */
 		$user 		= $event->getUser();
         $oRole = $user->getRole();
-        $aResources = $oRole->getResourcesList();
+        $aResources = $oRole->getResourcesList2D();
         $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');
         $aProtectedResources = unserialize($vSerializedProtectedResources);
-        foreach($aProtectedResources as $vProtectedResourceName){
-            if(array_key_exists($vProtectedResourceName,$aResources)){
-                Mage::log('this user has ACLs for resources that we need to protect via TFA');
-                $oResponse = Mage::app()->getResponse();
-                $vRedirectUrl = Mage::helper("adminhtml")->getUrl("twofactor/index/interstitial");
-                $oResponse->setRedirect($vRedirectUrl);
-            }
+        $aProtectedResourceIds = array();
+        foreach($aProtectedResources as $vResourceId => $aProtectedResource){
+            $aProtectedResourceIds[] = $aProtectedResource['resource_id'];
+        }
+        $aMatchingResources = array_intersect($aProtectedResourceIds, $aResources);
+        if(count($aMatchingResources)>0){
+            Mage::log('this user has ACLs for resources that we need to protect via TFA');
+            $oResponse = Mage::app()->getResponse();
+            $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/twofactorauth/interstitial");
+            
+            $oResponse->setRedirect($vRedirectUrl);
         }
 		return $this;
 	}

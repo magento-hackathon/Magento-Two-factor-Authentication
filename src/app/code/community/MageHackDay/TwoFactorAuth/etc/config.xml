@@ -40,7 +40,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <twofactor before="Mage_Adminhtml">MageHackDay_TwoFactorAuth_Adminhtml</twofactor>
+                        <MageHackDay_TwoFactorAuth before="Mage_Adminhtml">MageHackDay_TwoFactorAuth_Adminhtml</MageHackDay_TwoFactorAuth>
                     </modules>
                 </args>
             </adminhtml>
