@@ -4,6 +4,22 @@ require_once (Mage::getBaseDir('lib') . DS . 'GoogleAuthenticator' . DS . 'PHPGa
 
 class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
 {
+
+    /** @var PHPGangsta_GoogleAuthenticator */
+    private $_authenticator;
+
+    /**
+     * @return PHPGangsta_GoogleAuthenticator
+     */
+    protected function _getAuth()
+    {
+        if (empty($this->_authenticator)) {
+            $this->_authenticator = new PHPGangsta_GoogleAuthenticator();
+        }
+
+        return $this->_authenticator;
+    }
+
     /**
      * Create a new 2fa secret
      *
@@ -11,9 +27,7 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
      */
     public function createSecret()
     {
-        $ga = new PHPGangsta_GoogleAuthenticator();
-
-        return $ga->createSecret();
+        return $this->_getAuth()->createSecret();
     }
 
     /**
@@ -25,9 +39,7 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
      */
     public function getQrCodeImageUrl($name, $secret)
     {
-        $ga = new PHPGangsta_GoogleAuthenticator();
-
-        return $ga->getQRCodeGoogleUrl($name, $secret);
+        return $this->_getAuth()->getQRCodeGoogleUrl($name, $secret);
     }
 
     /**
@@ -39,8 +51,6 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
      */
     public function verifyCode($code, $secret)
     {
-        $ga = new PHPGangsta_GoogleAuthenticator();
-
-        return $ga->verifyCode($secret, $code, 2); // 2 = 30 seconds
+        return $this->_getAuth()->verifyCode($secret, $code, 2); // 2 = 60 seconds
     }
 }
