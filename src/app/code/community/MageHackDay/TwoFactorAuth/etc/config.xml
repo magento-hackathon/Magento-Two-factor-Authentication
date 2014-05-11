@@ -1,39 +1,40 @@
 <?xml version="1.0"?>
 <config>
-	<modules>
-		<MageHackDay_TwoFactorAuth>
-			<version>0.0.2</version>
-		</MageHackDay_TwoFactorAuth>
-	</modules>
-	<global>
-		<models>
-			<twofactorauth>
-				<class>MageHackDay_TwoFactorAuth_Model</class>
-			</twofactorauth>
-		</models>
-		<blocks>
-			<twofactorauth>
-				<class>MageHackDay_TwoFactorAuth_Block</class>
-			</twofactorauth>
-			<adminhtml>
-				<rewrite>
-					<permissions_user_edit_tab_main>MageHackDay_TwoFactorAuth_Block_Adminhtml_Permissions_User_Edit_Tab_Main</permissions_user_edit_tab_main>
-				</rewrite>
-			</adminhtml>
-		</blocks>
-		<helpers>
-        	<twofactorauth>
+    <modules>
+        <MageHackDay_TwoFactorAuth>
+            <version>0.1.0</version>
+        </MageHackDay_TwoFactorAuth>
+    </modules>
+    <global>
+        <models>
+            <twofactorauth>
+                <class>MageHackDay_TwoFactorAuth_Model</class>
+            </twofactorauth>
+        </models>
+        <blocks>
+            <twofactorauth>
+                <class>MageHackDay_TwoFactorAuth_Block</class>
+            </twofactorauth>
+            <adminhtml>
+                <rewrite>
+                    <system_account_edit_form>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
+                    </system_account_edit_form>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <twofactorauth>
                 <class>MageHackDay_TwoFactorAuth_Helper</class>
             </twofactorauth>
         </helpers>
-		<resources>
-			<twofactorauth_setup>
-				<setup>
-					<module>MageHackDay_TwoFactorAuth</module>
-				</setup>
-			</twofactorauth_setup>
-		</resources>
-	</global>
+        <resources>
+            <twofactorauth_setup>
+                <setup>
+                    <module>MageHackDay_TwoFactorAuth</module>
+                </setup>
+            </twofactorauth_setup>
+        </resources>
+    </global>
     <admin>
         <routers>
             <adminhtml>
@@ -45,18 +46,27 @@
             </adminhtml>
         </routers>
     </admin>
-	<adminhtml>
-		<events>
-			<admin_user_authenticate_after>
-				<observers>
+    <adminhtml>
+        <events>
+            <controller_action_predispatch_adminhtml_system_account_save>
+                <observers>
+                    <twofactorauth_controller_action_pre_dispatch_system_account_save>
+                        <type>singleton</type>
+                        <class>twofactorauth/observer</class>
+                        <method>verifySecret</method>
+                    </twofactorauth_controller_action_pre_dispatch_system_account_save>
+                </observers>
+            </controller_action_predispatch_adminhtml_system_account_save>
+            <admin_user_authenticate_after>
+                <observers>
                     <twofactorauth_user_authenticate_after>
-                    	<type>singleton</type>
+                        <type>singleton</type>
                         <class>twofactorauth/observer</class>
                         <method>adminUserAuthenticateAfter</method>
                     </twofactorauth_user_authenticate_after>
                 </observers>
-			</admin_user_authenticate_after>
-		</events>
+            </admin_user_authenticate_after>
+        </events>
         <layout>
             <updates>
                 <twofactorauth>
@@ -64,11 +74,12 @@
                 </twofactorauth>
             </updates>
         </layout>
-	</adminhtml>
+    </adminhtml>
     <default>
         <admin>
             <security>
-                <twofactorauth_protected_resources>a:2:{i:0;s:17:"admin/sales/order";i:1;s:12:"admin/system";}</twofactorauth_protected_resources>
+                <twofactorauth_protected_resources>a:2:{i:0;s:17:"admin/sales/order";i:1;s:12:"admin/system";}
+                </twofactorauth_protected_resources>
             </security>
         </admin>
     </default>

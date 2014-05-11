@@ -24,4 +24,34 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
         }
 		return $this;
 	}
+
+    public function verifySecret($observer)
+    {
+        require_once (Mage::getBaseDir('lib') . DS . 'GoogleAuthenticator' . DS . 'PHPGangsta' . DS . 'GoogleAuthenticator.php');
+
+        $code = Mage::app()->getRequest()->getParam('twofactorauth_code');
+        $secret = Mage::app()->getRequest()->getParam('twofactorauth_secret');
+
+        // The user didn't enter a code so they aren't try to configure 2fa
+        if (!$code) {
+            return;
+        }
+
+        $ga = new PHPGangsta_GoogleAuthenticator();
+
+        // Success
+        if ($ga->verifyCode($secret, $code, 2)) {
+            $userId = Mage::getSingleton('admin/session')->getUser()->getId();
+            $user = Mage::getModel('admin/user')
+                ->load($userId);
+
+            $user->setTwofactorToken($secret)
+                ->save();
+        }
+        // Failure
+        else {
+            $message = Mage::helper('twofactorauth')->__('The code you entered was invalid.  Please try again.');
+            Mage::getSingleton('adminhtml/session')->addError($message);
+        }
+    }
 }
