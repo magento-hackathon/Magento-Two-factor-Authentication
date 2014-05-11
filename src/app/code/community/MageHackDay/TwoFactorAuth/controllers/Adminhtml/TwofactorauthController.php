@@ -11,12 +11,8 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
 
 
     public function interstitialAction(){
-        $this
-            ->_title($this->__('Two Factor Authentication'))
-            ->loadLayout()
-            ->renderLayout()
-        ;
-        echo 'user should enter their auth string here @aedmonds';
+        $this->loadLayout();
+        $this->renderLayout();
     }
 
     public function verifyAction(){
