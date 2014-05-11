@@ -12,8 +12,12 @@
 
     <twofactorauth_customer_configure>
         <update handle="customer_account"/>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>twofactorauth/js/customer/configure.js</script></action>
+            <action method="addCss"><stylesheet>twofactorauth/css/customer/configure.css</stylesheet></action>
+        </reference>
         <reference name="my.account.wrapper">
-            <block type="twofactorauth/configure" name="customer.twofactorauth" template="twofactorauth/customer/configure.phtml"/>
+            <block type="twofactorauth/customer_configure" name="twofactorauth.customer.configure" template="twofactorauth/customer/configure.phtml" />
         </reference>
     </twofactorauth_customer_configure>
 </layout>

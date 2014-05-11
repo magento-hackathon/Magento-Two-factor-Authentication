@@ -5,3 +5,4 @@ src/app/design/adminhtml/default/default/template/twofactor app/design/adminhtml
 src/lib/GoogleAuthenticator lib/GoogleAuthenticator
 src/app/design/frontend/base/default/layout/twofactorauth.xml app/design/frontend/base/default/layout/twofactorauth.xml
 src/app/design/frontend/base/default/template/twofactorauth app/design/frontend/base/default/template/twofactorauth
+src/skin/frontend/base/default/twofactorauth skin/frontend/base/default/twofactorauth

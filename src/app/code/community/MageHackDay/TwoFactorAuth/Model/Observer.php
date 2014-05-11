@@ -87,4 +87,16 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
             $vRedirectUrl = Mage::helper("adminhtml")->getUrl("adminhtml/system_account/index");
         }
     }
+
+    public function customerAuthenticateAfter($observer)
+    {
+        $customer = $observer->getEvent()->getModel();
+
+        if($customer->getTwofactorauthToken()) {
+            $redirectUrl = Mage::getModel("core/url")->getUrl("twofactorauth/interstitial");
+            Mage::app()->getFrontController()->getResponse()
+                ->setRedirect($redirectUrl)
+                ->sendResponse();
+        }
+    }
 }

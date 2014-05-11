@@ -5,9 +5,9 @@ $installer->startSetup();
 
 $setup = new Mage_Eav_Model_Entity_Setup('core_setup');
 
-$setup->addAttribute('customer', 'twofactorauth_enabled', array(
-    'label'         => 'Enabled',
-    'type'          => 'int',
+$setup->addAttribute('customer', 'twofactorauth_token', array(
+    'label'         => 'Two Factor Auth Token',
+    'type'          => 'varchar',
     'input'         => 'text',
     'visible'       => true,
     'required'      => false,

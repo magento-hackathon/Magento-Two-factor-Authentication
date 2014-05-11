@@ -2,7 +2,7 @@
 <config>
     <modules>
         <MageHackDay_TwoFactorAuth>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </MageHackDay_TwoFactorAuth>
     </modules>
     <global>
@@ -86,6 +86,17 @@
         </layout>
     </adminhtml>
     <frontend>
+        <events>
+            <customer_customer_authenticated>
+                <observers>
+                    <twofactorauth_customer_customer_authenticated>
+                        <type>singleton</type>
+                        <class>twofactorauth/observer</class>
+                        <method>customerAuthenticateAfter</method>
+                    </twofactorauth_customer_customer_authenticated>
+                </observers>
+            </customer_customer_authenticated>
+        </events>
         <layout>
             <updates>
                 <twofactorauth>
