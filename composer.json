@@ -1,0 +1,9 @@
+{
+    "name":"aedmonds/magento-two-factor-authentication",
+    "type":"magento-module",
+    "homepage":"https://github.com/aligent/Magento-Two-factor-Authentication",
+    "description":"Implementation of an two-factor-authentication using Google's 2-Step Verification algorithm",
+    "require":{
+        "magento-hackathon/magento-composer-installer":"*"
+    }
+}
