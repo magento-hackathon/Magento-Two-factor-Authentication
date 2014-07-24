@@ -32,6 +32,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             return $this;
         }
 
+        Mage::getSingleton('adminhtml/session')->unsTfaNotEntered(true);
         $this->_redirect('*');
         return $this;
     }

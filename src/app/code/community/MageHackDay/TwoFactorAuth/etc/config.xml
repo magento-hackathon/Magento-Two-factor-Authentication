@@ -34,14 +34,14 @@
             </twofactorauth_setup>
         </resources>
         <events>
-            <adminhtml_controller_action_predispatch_start>
+            <controller_action_postdispatch_adminhtml>
                 <observers>
                     <twofactorauth_user_tfa_enforce>
                         <class>twofactorauth/observer</class>
                         <method>checkTfaSubmitted</method>
                     </twofactorauth_user_tfa_enforce>
                 </observers>
-            </adminhtml_controller_action_predispatch_start>
+            </controller_action_postdispatch_adminhtml>
         </events>
     </global>
     <admin>

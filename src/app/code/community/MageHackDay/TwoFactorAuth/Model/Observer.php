@@ -62,7 +62,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
             $user = Mage::getSingleton('admin/session')->getUser();
             try{
                 $user->setTwofactorToken($secret)->save();
-                Mage::getSingleton('admin/session')->unsTfaRequired(true);
+                Mage::getSingleton('adminhtml/session')->unsTfaNotAssociated(true);
             }
             catch(Exception $e){
                 Mage::logException($e);
@@ -76,7 +76,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
     }
 
     /**
-     * Listens for the adminhtml_controller_action_predispatch_start Event to
+     * Listens for the controller_action_postdispatch_adminhtml Event to
      * check if an Admin that was sent to either:
      *   (a) My Account to associate a Two Factor Auth, or
      *   (b) interstitial page to enter their TFA value
@@ -85,9 +85,15 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
      * @param $oObserver
      */
     public function checkTfaSubmitted($oObserver){
-        if(Mage::app()->getRequest()->getActionName() != 'logout'){
+        if(Mage::app()->getRequest()->getActionName() == 'logout'){
             return $this;
         }
+
+        $request = $oObserver->getControllerAction()->getRequest();
+        if($request->getControllerName() == 'twofactorauth' || $request->getControllerName() == 'system_account') {
+            return $this;
+        }
+
         $vRedirectUrl = '';
         if(Mage::getSingleton('adminhtml/session')->getTfaNotAssociated()){
             $vMessage = Mage::helper('twofactorauth')->__('Please connect your Two Factor Authentication before accessing restricted admin functionality');
