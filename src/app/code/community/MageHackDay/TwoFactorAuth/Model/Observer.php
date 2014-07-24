@@ -9,6 +9,10 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
      *
      */
     public function adminUserAuthenticateAfter($observer) {
+        if(!Mage::helper('twofactorauth')->isActive()) {
+            return $this;
+        }
+
         $event 		= $observer->getEvent();
         $username 	= $event->getUsername();
         /** @var $user Mage_Admin_Model_User */
@@ -85,7 +89,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
      * @param $oObserver
      */
     public function checkTfaSubmitted($oObserver){
-        if(Mage::app()->getRequest()->getActionName() == 'logout'){
+        if(Mage::app()->getRequest()->getActionName() == 'logout' || !Mage::helper('twofactorauth')->isActive()){
             return $this;
         }
 
@@ -120,6 +124,9 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
      */
     public function customerAuthenticateAfter($observer)
     {
+        if(!Mage::helper('twofactorauth')->isActive() || !Mage::helper('twofactorauth')->isFrontendActive()) {
+            return $this;
+        }
         $customer = $observer->getEvent()->getModel();
 
         if($customer->getTwofactorauthToken()) {
