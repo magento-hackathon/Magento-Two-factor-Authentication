@@ -49,10 +49,14 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
             )
         );
 
+        $helpMsg = Mage::helper('twofactorauth')->__('Scan the code above into Google Authenticator, then enter the code here and click save');
+        $afterElementHtml = '<p class="nm"><small>' . $helpMsg . '</small></p>';
+
         $fieldset->addField('twofactorauth_code', 'text', array(
                 'name'  => 'twofactorauth_code',
                 'label' => Mage::helper('twofactorauth')->__('Code'),
-                'title' => Mage::helper('twofactorauth')->__('Code')
+                'title' => Mage::helper('twofactorauth')->__('Code'),
+                'after_element_html' => $afterElementHtml
             )
         );
 
