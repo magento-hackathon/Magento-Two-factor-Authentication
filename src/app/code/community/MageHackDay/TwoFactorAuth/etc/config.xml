@@ -34,14 +34,14 @@
             </twofactorauth_setup>
         </resources>
         <events>
-            <adminhtml_controller_action_predispatch_start>
+            <controller_action_postdispatch_adminhtml>
                 <observers>
                     <twofactorauth_user_tfa_enforce>
                         <class>twofactorauth/observer</class>
                         <method>checkTfaSubmitted</method>
                     </twofactorauth_user_tfa_enforce>
                 </observers>
-            </adminhtml_controller_action_predispatch_start>
+            </controller_action_postdispatch_adminhtml>
         </events>
     </global>
     <admin>
@@ -117,6 +117,7 @@
         <admin>
             <security>
                 <active>1</active>
+                <frontend_active>0</frontend_active>
                 <twofactorauth_protected_resources>a:3:{s:18:"_1399777424266_266";a:1:{s:11:"resource_id";s:17:"admin/sales/order";}s:18:"_1399777434797_797";a:1:{s:11:"resource_id";s:12:"admin/system";}s:18:"_1399823001609_609";a:1:{s:11:"resource_id";s:3:"all";}}</twofactorauth_protected_resources>
             </security>
         </admin>

@@ -2,7 +2,7 @@
 <layout version="0.1.0">
     <customer_account>
         <reference name="customer_account_navigation">
-            <action method="addLink" translate="label" module="twofactorauth">
+            <action method="addLink" translate="label" module="twofactorauth" ifconfig="admin/security/frontend_active">
                 <name>twofactorauth</name>
                 <path>twofactorauth/customer/configure</path>
                 <label>Two Factor Authentication</label>

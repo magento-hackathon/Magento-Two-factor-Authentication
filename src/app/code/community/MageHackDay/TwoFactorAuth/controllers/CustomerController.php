@@ -12,6 +12,9 @@ class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_
      */
     public function preDispatch()
     {
+        if(!Mage::helper('twofactorauth')->isFrontendActive()) {
+            $this->_forward('defaultNoRoute');
+        }
         parent::preDispatch();
         if (!Mage::getSingleton('customer/session')->authenticate($this)) {
             $this->setFlag('', 'no-dispatch', true);
