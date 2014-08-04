@@ -57,11 +57,12 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
     /**
      * Get the name to pass to thru Google's QR service
      *
-     * @todo Get the default store name
      * @return string
      */
     public function getStoreName()
     {
-        return 'Magento';
+        $username = Mage::getSingleton('admin/session')->getUser()->getUsername();
+        $baseUrl = parse_url(Mage::app()->getStore()->getBaseUrl());
+        return $username.'@'.$baseUrl['host'];
     }
 }
