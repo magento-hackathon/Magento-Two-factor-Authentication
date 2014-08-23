@@ -16,10 +16,20 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
         $user = Mage::getModel('admin/user')
             ->load($userId);
 
-        // Create a new secret each page load, even if it's not being used
+
         $authHelper = Mage::helper('twofactorauth/auth');
-        $secret = $authHelper->createSecret();
-        $qrCodeUrl = $authHelper->getQrCodeImageUrl($authHelper->getStoreName(), $secret);
+
+        $session = Mage::getSingleton('core/session');
+
+        // Create a new secret for each new session
+        $secret = $session->getSecret();
+        $qrCodeUrl = $session->getQrCodeUrl();
+        if(!$secret || !$qrCodeUrl) {
+            $secret = $authHelper->createSecret();
+            $session->setSecret($secret);
+            $qrCodeUrl = $authHelper->getQrCodeImageUrl($authHelper->getStoreName(), $secret);
+            $session->setQrCodeUrl($qrCodeUrl);
+        }
 
         $form = $this->getForm();
 
