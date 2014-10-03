@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="twofactorauth" ifconfig="admin/security/frontend_active">
+                <name>twofactorauth</name>
+                <path>twofactorauth/customer/configure</path>
+                <label>Two Factor Authentication</label>
+            </action>
+        </reference>
+    </customer_account>
+
+    <twofactorauth_interstitial_index>
+        <reference name="root">
+            <action method="setTemplate"><value>page/1column.phtml</value></action>
+        </reference>
+        <reference name="content">
+            <block type="twofactorauth/interstitial" name="twofactorauth.interstitial" template="twofactorauth/interstitial.phtml" />
+        </reference>
+    </twofactorauth_interstitial_index>
+
+    <twofactorauth_customer_configure>
+        <update handle="customer_account"/>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><script>twofactorauth/js/customer/configure.js</script></action>
+            <action method="addCss"><stylesheet>twofactorauth/css/customer/configure.css</stylesheet></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="twofactorauth/customer_configure" name="twofactorauth.customer.configure" template="twofactorauth/customer/configure.phtml" />
+        </reference>
+    </twofactorauth_customer_configure>
+</layout>

@@ -1,8 +1,9 @@
 <?php
 
-require_once (Mage::getBaseDir('lib') . DS . 'ga4php' . DS . 'lib' . DS . 'ga4php.php');
+require_once (Mage::getBaseDir('lib') . DS . 'GoogleAuthenticator' . DS . 'PHPGangsta' . DS . 'GoogleAuthenticator.php');
 
-class MageHackDay_TwoFactorAuth_Model_Authenticator extends GoogleAuthenticator {
+class MageHackDay_TwoFactorAuth_Model_Authenticator extends Mage_Core_Model_Abstract
+{
 	
 	/*
 	 * HOTP - counter based
