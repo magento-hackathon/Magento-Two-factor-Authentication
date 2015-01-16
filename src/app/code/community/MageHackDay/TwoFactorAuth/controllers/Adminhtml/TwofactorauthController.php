@@ -54,4 +54,20 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         return $this;
     }
 
+    /**
+     * Clear cookies for the current user
+     */
+    public function clearCookiesAction()
+    {
+        try {
+            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies(Mage::getSingleton('admin/session')->getUser());
+            $this->_getSession()->addSuccess(Mage::helper('twofactorauth')->__('2FA cookies have been successfully deleted.'));
+        } catch (Exception $e) {
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('An error occurred while deleting 2FA cookies.'));
+            Mage::logException($e);
+        }
+
+        $this->_redirect('*/system_account/index');
+    }
+
 }

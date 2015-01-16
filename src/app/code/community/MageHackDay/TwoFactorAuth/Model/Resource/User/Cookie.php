@@ -8,6 +8,23 @@ class MageHackDay_TwoFactorAuth_Model_Resource_User_Cookie extends Mage_Core_Mod
     }
 
     /**
+     * Check whether the user has cookies
+     *
+     * @param int|Mage_Admin_Model_User $userId
+     * @return bool
+     */
+    public function hasCookies($userId)
+    {
+        if ($userId instanceof Mage_Admin_Model_User) {
+            $userId = $userId->getId();
+        }
+        $select = $this->getReadConnection()->select()
+            ->from($this->getMainTable(), array('count' => new Zend_Db_Expr('COUNT(*)')))
+            ->where('user_id = ?', $userId);
+        return (bool) $this->getReadConnection()->fetchOne($select);
+    }
+
+    /**
      * Retrieve cookies for the user
      *
      * @param int|Mage_Admin_Model_User $userId

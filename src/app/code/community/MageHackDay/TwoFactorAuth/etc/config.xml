@@ -24,6 +24,7 @@
             </twofactorauth>
             <adminhtml>
                 <rewrite>
+                    <system_account_edit>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit</system_account_edit>
                     <system_account_edit_form>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form</system_account_edit_form>
                 </rewrite>
             </adminhtml>
