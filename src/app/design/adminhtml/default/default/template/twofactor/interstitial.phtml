@@ -54,6 +54,10 @@
                 <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('adminhtml')->__('Security Code'); ?></label><br />
                     <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text" style="width:461px;" />
                 </div>
+                <div>
+                    <input type="checkbox" title="<?php echo Mage::helper('adminhtml')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('adminhtml')->__('Remember Me') ?></label><br />
+                    <?php echo Mage::helper('adminhtml')->__('Do not require 2-Factor-Authentication on this computer in the future. This features uses a cookie that will never expire and must be removed manually so do not use this feature on public computers.') ?>
+                </div>
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
                 <div class="clear"></div>
                 <div class="form-buttons">

@@ -17,6 +17,9 @@ class MageHackDay_TwoFactorAuth_Model_Observer {
         $username 	= $event->getUsername();
         /** @var $user Mage_Admin_Model_User */
         $user 		= $event->getUser();
+        if (Mage::helper('twofactorauth/auth')->isAuthorized($user)) {
+            return $this;
+        }
         $oRole = $user->getRole();
         $aResources = $oRole->getResourcesList2D();
         $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');

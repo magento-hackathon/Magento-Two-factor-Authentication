@@ -2,14 +2,21 @@
 <config>
     <modules>
         <MageHackDay_TwoFactorAuth>
-            <version>0.1.1</version>
+            <version>0.1.2</version>
         </MageHackDay_TwoFactorAuth>
     </modules>
     <global>
         <models>
             <twofactorauth>
                 <class>MageHackDay_TwoFactorAuth_Model</class>
+                <resourceModel>twofactorauth_resource</resourceModel>
             </twofactorauth>
+            <twofactorauth_resource>
+                <class>MageHackDay_TwoFactorAuth_Model_Resource</class>
+                <entities>
+                    <user_cookie><table>admin_user_cookie</table></user_cookie>
+                </entities>
+            </twofactorauth_resource>
         </models>
         <blocks>
             <twofactorauth>
