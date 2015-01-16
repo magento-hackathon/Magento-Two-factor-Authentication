@@ -61,7 +61,11 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
      */
     public function getStoreName()
     {
-        $username = Mage::getSingleton('admin/session')->getUser()->getUsername();
+        if (Mage::app()->getStore()->isAdmin()) {
+            $username = Mage::getSingleton('admin/session')->getUser()->getUsername();
+        } else {
+            $username = Mage::getSingleton('customer/session')->getCustomer()->getName();
+        }
         $baseUrl = parse_url(Mage::app()->getStore()->getBaseUrl());
         return $username.'@'.$baseUrl['host'];
     }
