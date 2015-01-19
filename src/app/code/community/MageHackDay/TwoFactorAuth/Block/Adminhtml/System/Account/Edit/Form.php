@@ -13,7 +13,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
         }
 
         $userId = Mage::getSingleton('admin/session')->getUser()->getId();
-        $user = Mage::getModel('admin/user')
+        $user = Mage::getModel('admin/user') /** @var $user Mage_Admin_Model_User */
             ->load($userId);
 
 
@@ -69,6 +69,29 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form
                 'after_element_html' => $afterElementHtml
             )
         );
+
+        $questionsFieldset = $form->addFieldset(
+            'secret_questions',
+            array('legend' => Mage::helper('twofactorauth')->__('One Time Secret Question'))
+        );
+
+        $questionsFieldset->addType('secret_questions', 'MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Form_Questions');
+
+        $questionsCollection = Mage::getResourceModel('twofactorauth/user_question_collection')->addUserFilter($user);
+        $questionsCollection->setOrder('question_id', 'ASC');
+        $items = array();
+        foreach ($questionsCollection as $question) { /** @var $question MageHackDay_TwoFactorAuth_Model_User_Question */
+            $items[] = array(
+                'question' => $question->getQuestion(),
+                'answer'   => $question->getAnswer(),
+            );
+        }
+
+        $questionsFieldset->addField('questions', 'secret_questions', array(
+            'name'      => 'questions',
+            'row_count' => 5,
+            'value'     => $items,
+        ));
 
         $this->setForm($form);
     }
