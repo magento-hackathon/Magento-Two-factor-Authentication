@@ -70,4 +70,60 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $this->_redirect('*/system_account/index');
     }
 
+    /**
+     * Display one time secret question
+     */
+    public function questionAction()
+    {
+        $collection = Mage::getResourceModel('twofactorauth/user_question_collection')
+            ->addUserFilter(Mage::getSingleton('admin/session')->getUser())
+            ->setRandomOrder();
+        $collection->setCurPage(1)->setPageSize(1);
+        $question = $collection->getFirstItem();
+        if ( ! $question->getId()) {
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Cannot load security question.'));
+            $this->_redirect('*/*/interstitial');
+            return;
+        }
+
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
+     * Check answer to the question
+     */
+    public function answerAction()
+    {
+        $questionId = (int) Mage::app()->getRequest()->getPost('question_id');
+        if ( ! $questionId) {
+            $this->_redirect('*/*/interstitial');
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Unknown question.'));
+            return;
+        }
+        $answer = (string) Mage::app()->getRequest()->getPost('answer');
+        if (empty($answer)) {
+            $this->_redirect('*/*/interstitial');
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Please enter your answer to the secret question.'));
+            return;
+        }
+        $user = Mage::getSingleton('admin/session')->getUser(); /** @var $user Mage_Admin_Model_User */
+        $question = Mage::getModel('twofactorauth/user_question')->load($questionId);
+        if ( ! $question->getId() || $question->getUserId() != $user->getId()) {
+            $this->_redirect('*/*/interstitial');
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Cannot load the secret question.'));
+            return;
+        }
+        if ($question->getAnswer() != $answer) {
+            $this->_redirect('*/*/interstitial');
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Answer to the secret question is invalid.'));
+            return;
+        }
+
+        Mage::getSingleton('adminhtml/session')->unsTfaNotEntered(true);
+        $question->delete();
+        $this->_redirect('*');
+        return;
+    }
+
 }

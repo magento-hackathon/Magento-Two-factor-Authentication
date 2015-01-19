@@ -4,6 +4,7 @@
  * Admin User Question model
  *
  * @method MageHackDay_TwoFactorAuth_Model_Resource_User_Question getResource()
+ * @method MageHackDay_TwoFactorAuth_Model_User_Question load()
  * @method MageHackDay_TwoFactorAuth_Model_User_Question setQuestionId(int $value)
  * @method int getQuestionId()
  * @method MageHackDay_TwoFactorAuth_Model_User_Question setUserId(int $value)

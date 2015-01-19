@@ -21,4 +21,21 @@ class MageHackDay_TwoFactorAuth_Model_Resource_User_Question extends Mage_Core_M
         $where = $this->_getWriteAdapter()->quoteInto('user_id = ?', $userId);
         $this->_getWriteAdapter()->delete($this->getMainTable(), $where);
     }
+
+    /**
+     * Check whether the user has secret questions
+     *
+     * @param int|Mage_Admin_Model_User $userId
+     * @return bool
+     */
+    public function hasQuestions($userId)
+    {
+        if ($userId instanceof Mage_Admin_Model_User) {
+            $userId = $userId->getId();
+        }
+        $select = $this->_getReadAdapter()->select()
+            ->from($this->getMainTable(), array('count' => new Zend_Db_Expr('COUNT(*)')))
+            ->where('user_id = ?', $userId);
+        return (bool) $this->_getReadAdapter()->fetchOne($select);
+    }
 }
