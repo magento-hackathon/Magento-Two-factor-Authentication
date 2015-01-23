@@ -57,7 +57,7 @@
                 </div>
                 <div>
                     <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />
-                    <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. This features uses a cookie that will never expire and must be removed manually so do not use this feature on public computers.') ?>
+                    <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. Do not use this feature on public computers.') ?>
                 </div>
                 <?php if ($this->hasSecretQuestion()): ?>
                 <div>

@@ -37,7 +37,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         }
         $bValid = $authHelper->verifyCode($vInputCode, $vSecret);
         if ($bValid === FALSE) {
-            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Two Factor Authentication has failed. Please try again or contact an administrator'));
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Invalid security code.'));
             $this->_redirect('*/*/interstitial');
             return;
         }
