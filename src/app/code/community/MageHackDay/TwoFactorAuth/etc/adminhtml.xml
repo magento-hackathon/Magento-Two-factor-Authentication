@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <myaccount>
+                    <children>
+                        <two_factor_auth translate="title">
+                            <title>Two-Factor Authentication</title>
+                            <action>adminhtml/twofactorauth/qr</action>
+                            <sort_order>10</sort_order>
+                        </two_factor_auth>
+                    </children>
+                </myaccount>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <myaccount>
+                                <children translate="title">
+                                    <title>Two-Factor Authentication</title>
+                                    <sort_order>10</sort_order>
+                                </children>
+                            </myaccount>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

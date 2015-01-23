@@ -7,13 +7,13 @@
  * @package     MageHackDay_TwoFactorAuth
  * @author      Jonathan Day <jonathan@aligent.com.au>
  */
-class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_Adminhtml_Controller_Action{
-
-
-    public function interstitialAction(){
+class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_Adminhtml_Controller_Action
+{
+    public function interstitialAction()
+    {
         $user = Mage::getSingleton('admin/session')->getUser(); /** @var $user Mage_Admin_Model_User */
         if (Mage::helper('twofactorauth/auth')->isAuthorized($user)) {
-            Mage::getSingleton('adminhtml/session')->unsTfaNotEntered(true);
+            $this->_getSession()->unsTfaNotEntered(TRUE);
             $this->_redirect('*');
             return;
         }
@@ -22,22 +22,24 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $this->renderLayout();
     }
 
-    public function verifyAction(){
+    public function verifyAction()
+    {
         $oRequest = Mage::app()->getRequest();
-        $vInputCode = $oRequest->getPost('input_code',null);
-        $rememberMe = (bool) $oRequest->getPost('remember_me', false);
+        $vInputCode = $oRequest->getPost('input_code', NULL);
+        $rememberMe = (bool) $oRequest->getPost('remember_me', FALSE);
         $authHelper = Mage::helper('twofactorauth/auth');
         $oUser = Mage::getSingleton('admin/session')->getUser(); /** @var $oUser Mage_Admin_Model_User */
         $vSecret = $oUser->getTwofactorToken();
-        if(!$vSecret){
-            //user is accessing protected route without configured TFA
-            return $this;
+        if ( ! $vSecret) {
+            // User is accessing protected route without configured TFA
+            $this->_redirect('*/*/qr');
+            return;
         }
         $bValid = $authHelper->verifyCode($vInputCode, $vSecret);
-        if($bValid === false){
-            Mage::getSingleton('adminhtml/session')->addError('Two Factor Authentication has failed. Please try again or contact an administrator');
-            $this->_redirect('adminhtml/twofactorauth/interstitial');
-            return $this;
+        if ($bValid === FALSE) {
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Two Factor Authentication has failed. Please try again or contact an administrator'));
+            $this->_redirect('*/*/interstitial');
+            return;
         }
         if ($rememberMe) {
             try {
@@ -49,9 +51,9 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             }
         }
 
-        Mage::getSingleton('adminhtml/session')->unsTfaNotEntered(true);
+        $this->_getSession()->unsTfaNotEntered();
         $this->_redirect('*');
-        return $this;
+        return;
     }
 
     /**
@@ -91,7 +93,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     }
 
     /**
-     * Check answer to the question
+     * Check answer to the one time secret question
      */
     public function answerAction()
     {
@@ -120,10 +122,49 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             return;
         }
 
-        Mage::getSingleton('adminhtml/session')->unsTfaNotEntered(true);
+        Mage::getSingleton('adminhtml/session')->setTfaNotEntered(FALSE);
         $question->delete();
         $this->_redirect('*');
         return;
     }
 
+    /**
+     * QR code action
+     */
+    public function qrAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
+     * Submit QR secret code
+     */
+    public function qrSubmitAction()
+    {
+        $secret = (string) $this->getRequest()->getPost('qr_secret');
+        $securityCode = (string) $this->getRequest()->getPost('security_code');
+        if ( ! $secret || ! $securityCode) {
+            $this->_redirect('*/*/qr');
+            return;
+        }
+
+        if (Mage::helper('twofactorauth/auth')->verifyCode($securityCode, $secret)) {
+            try {
+                $user = Mage::getSingleton('admin/session')->getUser(); /** @var $user Mage_Admin_Model_User */
+                $user->setTwofactorToken($secret)->save();
+                $this->_getSession()->unsTfaNotAssociated();
+            }
+            catch (Exception $e) {
+                Mage::logException($e);
+            }
+        } else {
+            $this->_getSession()->addError(Mage::helper('twofactorauth')->__('Invalid security code.'));
+            $this->_redirect('*/*/qr');
+            return;
+        }
+
+        $this->_redirect('*');
+        return;
+    }
 }

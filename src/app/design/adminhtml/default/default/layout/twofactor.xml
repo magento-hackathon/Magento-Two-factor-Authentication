@@ -9,6 +9,12 @@
         </block>
     </adminhtml_twofactorauth_interstitial>
 
+    <adminhtml_twofactorauth_qr>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="twofactorauth/adminhtml_qr" name="content" template="twofactor/qr.phtml" />
+        </block>
+    </adminhtml_twofactorauth_qr>
+
     <adminhtml_twofactorauth_question>
         <block type="core/text_list" name="root" output="toHtml">
             <block type="twofactorauth/adminhtml_question" name="content" template="twofactor/question.phtml">
