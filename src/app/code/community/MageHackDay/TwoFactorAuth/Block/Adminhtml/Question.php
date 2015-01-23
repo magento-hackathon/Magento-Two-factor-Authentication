@@ -9,12 +9,16 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Question extends Mage_Adminhtml_
      */
     public function getSecretQuestion()
     {
-        return Mage::getResourceModel('twofactorauth/user_question_collection')
-            ->addUserFilter($this->getUser())
-            ->setRandomOrder()
-            ->setCurPage(1)
-            ->setPageSize(1)
-            ->getFirstItem();
+        if ( ! $this->hasData('secret_question')) {
+            $secretQuestion = Mage::getResourceModel('twofactorauth/user_question_collection')
+                ->addUserFilter($this->getUser())
+                ->setRandomOrder()
+                ->setCurPage(1)
+                ->setPageSize(1)
+                ->getFirstItem();
+            $this->setData('secret_question', $secretQuestion);
+        }
+        return $this->getData('secret_question');
     }
 
     /**
