@@ -32,6 +32,7 @@
     <title><?php echo Mage::helper('adminhtml')->__('Two Factor Authentication'); ?></title>
     <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('reset.css'); ?>" media="all" />
     <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('boxes.css'); ?>" media="all" />
+    <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('twofactorauth.css'); ?>" media="all" />
     <link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico'); ?>" type="image/x-icon" />
     <link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico'); ?>" type="image/x-icon" />
 
@@ -41,39 +42,81 @@
     <!--[if lt IE 7]> <link rel="stylesheet" href="<?php echo $this->getSkinUrl('below_ie7.css'); ?>" type="text/css" media="all" /> <![endif]-->
     <!--[if IE 7]> <link rel="stylesheet" href="<?php echo $this->getSkinUrl('ie7.css'); ?>" type="text/css" media="all" /> <![endif]-->
 </head>
-<body id="page-login">
-<div class="login-container">
-    <div class="login-box">
-        <form method="post" action="<?php echo $this->getUrl('adminhtml/twofactorauth/qrSubmit') ?>" id="loginForm">
-            <fieldset class="login-form">
-                <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
-                <h2 style="text-align:center;"><?php echo Mage::helper('twofactorauth')->__('Please enter your Secret Key'); ?></h2>
-                <table style="width:100%;">
+<body>
+<div id="qr">
+    <form method="post" id="qrForm" action="<?php echo $this->getUrl('adminhtml/twofactorauth/qrSubmit') ?>">
+        <fieldset>
+            <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
+            <div id="messages">
+                <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+            </div>
+            <h2 style="text-align:center;"><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication Setup'); ?></h2>
+            <?php /* QR code */ ?>
+            <?php if ($this->getUser()->getTwofactorToken()): // Display reset link ?>
+                <a href="<?php echo $this->getUrl('adminhtml/twofactorauth/reset') ?>" title="<?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>"><?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?></a>
+            <?php else: // Display QR code ?>
+                <table class="qr">
                     <tr>
-                        <td style="width: 50%;"><img src="<?php echo $this->getQrCodeUrl() ?>" alt="<?php echo Mage::helper('twofactorauth')->__('QR Code') ?>" /></td>
-                        <td style="vertical-align:middle;">
-                            <div id="messages">
-                                <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
-                            </div>
+                        <td><img src="<?php echo $this->getQrCodeUrl() ?>" alt="<?php echo Mage::helper('twofactorauth')->__('QR Code') ?>" width="200px" height="200px"/></td>
+                        <td>
                             <label for="security_code"><?php echo Mage::helper('twofactorauth')->__('Security Code') ?></label><br />
                             <input type="text" id="security_code" name="security_code" value="" class="required-entry input-text" /><br />
                             <input type="hidden" name="qr_secret" value="<?php echo $this->getQrCodeSecret() ?>" />
                             <span><?php echo Mage::helper('twofactorauth')->__('Scan the QR code into Google Authenticator, then enter the code here and click save.') ?></span>
+                            <div>
+                                <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />
+                                <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. Do not use this feature on public computers.') ?>
+                            </div>
                         </td>
                     </tr>
                 </table>
-                <div class="form-buttons">
-                    <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('adminhtml')->__('Back'); ?></a>
-                    <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Submit Code'); ?></span></span></span></button>
-                </div>
-            </fieldset>
-            <p class="legal"><?php echo Mage::helper('adminhtml')->__('Magento is a trademark of Magento Inc. Copyright &copy; %s Magento Inc.', date('Y')); ?></p>
-        </form>
-        <div class="bottom"></div>
-        <script type="text/javascript">
-            var loginForm = new varienForm('loginForm');
-        </script>
-    </div>
+            <?php endif; ?>
+            <?php /* Secret questions */ ?>
+            <div class="grid">
+                <table cellspacing="0" class="data border questions">
+                    <colgroup>
+                        <col width="1"/>
+                        <col width="400"/>
+                        <col width="400"/>
+                    </colgroup>
+                    <thead>
+                    <tr class="headings">
+                        <th><?php echo Mage::helper('twofactorauth')->__('#') ?></th>
+                        <th><?php echo Mage::helper('twofactorauth')->__('Question') ?></th>
+                        <th><?php echo Mage::helper('twofactorauth')->__('Answer') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php for ($i = 0; $i < 5; $i++): ?>
+                        <tr>
+                            <td><?php echo $i+1 ?></td>
+                            <?php foreach (array('question', 'answer') as $field): ?>
+                                <?php $name = $this->getItemName($i, $field) ?>
+                                <?php $value = $this->getItemValue($i, $field) ?>
+                                <?php $type = ($field == 'question') ? 'type' : 'password' ?>
+                                <?php $class = ($i == 0) ? ' required-entry ' : '' ?>
+                                <td>
+                                    <input type="<?php echo $type ?>" name="<?php echo $name ?>" value="<?php echo $value ?>" class="input-text <?php echo $class ?>" maxlength="100" />
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endfor; ?>
+                    </tbody>
+                </table>
+                <p class="nm">
+                    <small><?php echo Mage::helper('twofactorauth')->__('Maximum length for the questions and answers is 100 symbols. At least one secret question is required.') ?></small><br/>
+                    <small><?php echo Mage::helper('twofactorauth')->__('One Time Secret Question should be recorded somewhere for safe-keeping.') ?></small>
+                </p>
+            </div>
+            <div class="form-buttons">
+                <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back'); ?></a>
+                <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
+            </div>
+        </fieldset>
+    </form>
+    <script type="text/javascript">
+        var loginForm = new varienForm('qrForm');
+    </script>
 </div>
 </body>
 </html>

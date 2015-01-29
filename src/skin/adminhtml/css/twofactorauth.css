@@ -1,0 +1,11 @@
+/* Setup QR code */
+div#qr { width:850px; margin:170px auto; }
+
+div#qr table.qr { width:100%; }
+div#qr table.qr td:first-child { width:220px; }
+div#qr table.qr td:last-child { vertical-align:middle; }
+
+div#qr table.questions { margin:5px 0; }
+div#qr table.questions tbody input { width:400px; }
+
+div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }

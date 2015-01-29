@@ -14,7 +14,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit extends Mage
                 'label'     => Mage::helper('twofactorauth')->__('Clear 2FA Cookies'),
                 'class'     => 'delete',
                 'onclick'   => 'confirmSetLocation(\''
-                    . Mage::helper('twofactorauth')->__('Are you sure you want to clear 2FS cookies?')
+                    . Mage::helper('twofactorauth')->__('Are you sure you want to clear 2FA cookies?')
                     . '\', \'' . $this->getUrl('adminhtml/twofactorauth/clearCookies') . '\')'
             ));
         }

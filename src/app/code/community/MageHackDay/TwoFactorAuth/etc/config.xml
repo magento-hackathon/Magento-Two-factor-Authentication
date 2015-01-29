@@ -26,7 +26,6 @@
             <adminhtml>
                 <rewrite>
                     <system_account_edit>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit</system_account_edit>
-                    <system_account_edit_form>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit_Form</system_account_edit_form>
                 </rewrite>
             </adminhtml>
         </blocks>
@@ -66,15 +65,6 @@
     </admin>
     <adminhtml>
         <events>
-            <controller_action_predispatch_adminhtml_system_account_save>
-                <observers>
-                    <twofactorauth_controller_action_pre_dispatch_system_account_save>
-                        <type>singleton</type>
-                        <class>twofactorauth/observer</class>
-                        <method>verifySecret</method>
-                    </twofactorauth_controller_action_pre_dispatch_system_account_save>
-                </observers>
-            </controller_action_predispatch_adminhtml_system_account_save>
             <admin_session_user_login_success>
                 <observers>
                     <twofactorauth_user_authenticate_after>
