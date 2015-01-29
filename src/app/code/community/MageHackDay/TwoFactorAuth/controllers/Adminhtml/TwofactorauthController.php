@@ -120,7 +120,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             $this->_getSession()->addError($this->__('Cannot load the secret question.'));
             return;
         }
-        if ($question->getAnswer() != $answer) {
+        if ( ! Mage::helper('core')->validateHash($answer, $question->getAnswer())) {
             $this->_redirect('*/*/interstitial');
             $this->_getSession()->addError($this->__('Answer to the secret question is invalid.'));
             return;
@@ -211,15 +211,29 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                 $resource = Mage::getResourceModel('twofactorauth/user_question');
                 try {
                     $resource->beginTransaction();
-                    $resource->deleteQuestions($this->_getUser()->getId());
+                    // Update existing questions
+                    $existingQuestions = Mage::getResourceModel('twofactorauth/user_question_collection')->addUserFilter($this->_getUser());
+                    foreach ($existingQuestions as $questionObject) { /** @var $questionObject MageHackDay_TwoFactorAuth_Model_User_Question */
+                        if (isset($questions[$questionObject->getQuestion()])) {
+                            $answer = (string) $questions[$questionObject->getQuestion()];
+                            if ( ! preg_match('/^\*{6}$/', $answer)) {
+                                $questionObject->setAnswer(Mage::helper('core')->getHash($answer, 10))->save();
+                            }
+                            unset($questions[$questionObject->getQuestion()]);
+                        } else {
+                            $questionObject->delete();
+                        }
+                    }
+                    // Add new questions
                     foreach ($questions as $question => $answer) {
                         $questionObject = Mage::getModel('twofactorauth/user_question'); /** @var $questionObject MageHackDay_TwoFactorAuth_Model_User_Question */
                         $questionObject->setUserId($this->_getUser()->getId());
                         $questionObject->setQuestion($question);
-                        $questionObject->setAnswer($answer);
+                        $questionObject->setAnswer(Mage::helper('core')->getHash($answer, 10));
                         $questionObject->save();
                     }
                     $resource->commit();
+                    $this->_getSession()->addSuccess($this->__('The secret questions have been saved.'));
                 } catch (Exception $e) {
                     $resource->rollBack();
                     Mage::logException($e);

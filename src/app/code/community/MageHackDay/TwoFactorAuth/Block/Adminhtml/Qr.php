@@ -85,6 +85,13 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Qr extends Mage_Adminhtml_Block_
     public function getItemValue($iterator, $field)
     {
         $items = $this->getItems();
-        return isset($items[$iterator][$field]) ? strval($items[$iterator][$field]) : '';
+        $value = '';
+        if (isset($items[$iterator][$field])) {
+            switch ($field) {
+                case 'question': $value = strval($items[$iterator][$field]); break;
+                case 'answer': $value  = str_repeat('*', 6); break;
+            }
+        }
+        return $value;
     }
 }
