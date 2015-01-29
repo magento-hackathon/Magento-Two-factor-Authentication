@@ -108,14 +108,34 @@
                     <small><?php echo Mage::helper('twofactorauth')->__('One Time Secret Question should be recorded somewhere for safe-keeping.') ?></small>
                 </p>
             </div>
+            <div>
+                <button onclick="generateOneTimeCode()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Generate'); ?></span></span></span></button>&nbsp;<span id="random-code"><strong></strong></span><br />
+                <p class="nm">
+                    <small><?php echo Mage::helper('twofactorauth')->__('"Generate" button generates one-time codes for the "Secret Code #1" question.') ?></small>
+                </p>
+            </div>
             <div class="form-buttons">
                 <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back'); ?></a>
-                <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
+                <button onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
             </div>
         </fieldset>
     </form>
     <script type="text/javascript">
         var loginForm = new varienForm('qrForm');
+        function generateOneTimeCode() {
+            var code = '';
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$*-.=?@_";
+            for (var i = 0; i < 10; i++) {
+                code += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
+            var question = $$('[name="questions[0][question]"')[0];
+            var answer = $$('[name="questions[0][answer]"')[0];
+            if (question && answer) {
+                question.value = 'Secret Code #1';
+                answer.type = 'text';
+                answer.value = code;
+            }
+        }
     </script>
 </div>
 </body>
