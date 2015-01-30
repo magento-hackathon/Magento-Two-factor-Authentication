@@ -126,8 +126,15 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             return;
         }
 
-        Mage::getSingleton('adminhtml/session')->setTfaNotEntered(FALSE);
+        $this->_getSession()->setTfaNotEntered(FALSE);
         $question->delete();
+        $hasQuestions = Mage::getResourceModel('twofactorauth/user_question')->hasQuestions($this->_getUser());
+        if ( ! $hasQuestions) {
+            $this->_getSession()->addWarning($this->__('The last one-time question was used. Please generate new secret questions.'));
+            $this->_redirect('*/*/qr');
+            return;
+        }
+
         $this->_redirect('*');
         return;
     }
@@ -294,5 +301,37 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     protected function _getUser()
     {
         return Mage::getSingleton('admin/session')->getUser();
+    }
+
+    /**
+     * Check whether the action is allowed
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        $acl = 'admin/system/myaccount/two_factor_auth';
+        $isAllowed = Mage::getSingleton('admin/session')->isAllowed($acl);
+        if ( ! $isAllowed) {
+            return FALSE;
+        }
+
+        $action = $this->getRequest()->getActionName();
+        $hasToken = !! $this->_getUser()->getTwofactorToken();
+        $authenticated = ! Mage::getSingleton('adminhtml/session')->getTfaNotEntered();
+
+        if (in_array($action, array('question', 'answer'))) {
+            return $hasToken;
+        }
+
+        if (in_array($action, array('qr', 'qrSubmit'))) {
+            return ( ! $hasToken || ($hasToken && $authenticated));
+        }
+
+        if ( ! $authenticated && in_array($action, array('clearCookies', 'reset'))) {
+            return FALSE;
+        }
+
+        return TRUE;
     }
 }
