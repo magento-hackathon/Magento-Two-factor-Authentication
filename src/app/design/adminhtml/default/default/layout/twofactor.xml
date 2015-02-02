@@ -27,7 +27,7 @@
 
     <adminhtml_twofactorauth_edit>
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>css/twofactorauth.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>twofactorauth.css</name></action>
         </reference>
         <reference name="content">
             <block type="twofactorauth/adminhtml_edit" />
