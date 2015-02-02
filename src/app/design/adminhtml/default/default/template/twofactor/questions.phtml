@@ -1,0 +1,59 @@
+<?php /** @var $this MageHackDay_TwoFactorAuth_Block_Adminhtml_Questions */ ?>
+<div class="grid">
+    <table cellspacing="0" class="data border questions">
+        <colgroup>
+            <col width="1"/>
+            <col width="400"/>
+            <col width="400"/>
+            <col width="50"/>
+        </colgroup>
+        <thead>
+        <tr class="headings">
+            <th><?php echo Mage::helper('twofactorauth')->__('#') ?></th>
+            <th><?php echo Mage::helper('twofactorauth')->__('Question') ?></th>
+            <th><?php echo Mage::helper('twofactorauth')->__('Answer') ?></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php for ($i = 0; $i < 5; $i++): ?>
+            <tr>
+                <td><?php echo $i+1 ?></td>
+                <?php foreach (array('question', 'answer') as $field): ?>
+                    <?php $name = $this->getItemName($i, $field) ?>
+                    <?php $value = $this->getItemValue($i, $field) ?>
+                    <?php $type = ($field == 'question') ? 'type' : 'password' ?>
+                    <?php $class = ($i == 0) ? ' required-entry ' : '' ?>
+                    <td>
+                        <input type="<?php echo $type ?>" name="<?php echo $name ?>" value="<?php echo $value ?>" class="input-text <?php echo $class ?>" maxlength="100" />
+                    </td>
+                <?php endforeach; ?>
+                <td>
+                    <button class="generate" onclick="generateOneTimeCode(<?php echo json_encode($i) ?>)" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Generate'); ?></span></span></span></button>
+                </td>
+            </tr>
+        <?php endfor; ?>
+        </tbody>
+    </table>
+    <p class="nm">
+        <small><?php echo Mage::helper('twofactorauth')->__('Maximum length for the questions and answers is 100 symbols. At least one secret question is required.') ?></small><br/>
+        <small><?php echo Mage::helper('twofactorauth')->__('One Time Secret Question should be recorded somewhere for safe-keeping.') ?></small>
+    </p>
+</div>
+<script type="text/javascript">
+    var loginForm = new varienForm('qrForm');
+    function generateOneTimeCode(iterator) {
+        var code = '';
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$*-.=?@_";
+        for (var i = 0; i < 10; i++) {
+            code += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        var question = $$('[name="questions['+iterator+'][question]"')[0];
+        var answer = $$('[name="questions['+iterator+'][answer]"')[0];
+        if (question && answer) {
+            question.value = 'Secret Code #'+(iterator+1);
+            answer.type = 'text';
+            answer.value = code;
+        }
+    }
+</script>

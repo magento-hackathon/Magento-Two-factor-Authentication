@@ -23,11 +23,6 @@
             <twofactorauth>
                 <class>MageHackDay_TwoFactorAuth_Block</class>
             </twofactorauth>
-            <adminhtml>
-                <rewrite>
-                    <system_account_edit>MageHackDay_TwoFactorAuth_Block_Adminhtml_System_Account_Edit</system_account_edit>
-                </rewrite>
-            </adminhtml>
         </blocks>
         <helpers>
             <twofactorauth>

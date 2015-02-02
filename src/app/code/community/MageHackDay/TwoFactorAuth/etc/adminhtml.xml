@@ -7,7 +7,7 @@
                     <children>
                         <two_factor_auth translate="title">
                             <title>Two-Factor Authentication</title>
-                            <action>adminhtml/twofactorauth/qr</action>
+                            <action>adminhtml/twofactorauth/edit</action>
                             <sort_order>10</sort_order>
                         </two_factor_auth>
                     </children>

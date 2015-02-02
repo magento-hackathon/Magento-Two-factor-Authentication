@@ -11,7 +11,9 @@
 
     <adminhtml_twofactorauth_qr>
         <block type="core/text_list" name="root" output="toHtml">
-            <block type="twofactorauth/adminhtml_qr" name="content" template="twofactor/qr.phtml" />
+            <block type="twofactorauth/adminhtml_qr" name="content" template="twofactor/qr.phtml">
+                <block type="twofactorauth/adminhtml_questions" name="questions" />
+            </block>
         </block>
     </adminhtml_twofactorauth_qr>
 
@@ -22,5 +24,14 @@
             </block>
         </block>
     </adminhtml_twofactorauth_question>
+
+    <adminhtml_twofactorauth_edit>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>css/twofactorauth.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="twofactorauth/adminhtml_edit" />
+        </reference>
+    </adminhtml_twofactorauth_edit>
 
 </layout>

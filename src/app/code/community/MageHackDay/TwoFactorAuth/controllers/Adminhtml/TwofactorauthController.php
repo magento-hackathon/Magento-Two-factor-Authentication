@@ -68,13 +68,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     {
         try {
             Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($this->_getUser());
-            $this->_getSession()->addSuccess($this->__('2FA cookies have been successfully deleted.'));
+            $this->_getSession()->addSuccess($this->__('Security code will be required on next login.'));
         } catch (Exception $e) {
-            $this->_getSession()->addError($this->__('An error occurred while deleting 2FA cookies.'));
-            Mage::logException($e);
+            $this->_getSession()->addException($e, $this->__('An error occurred while forcing security code on next login.'));
         }
 
-        $this->_redirect('*/system_account/index');
+        $this->_redirect('*/*/edit');
     }
 
     /**
@@ -144,6 +143,11 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     public function qrAction()
     {
+        if ($this->_hasToken() && $this->_isAuthenticated()) {
+            $this->_redirect('*/*/edit');
+            return;
+        }
+
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -153,7 +157,9 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     public function qrSubmitAction()
     {
-        $helper = Mage::helper('twofactorauth/auth');
+        if ( ! $this->getRequest()->isPost()) {
+            return;
+        }
 
         // Process secret token if not yet configured
         if ( ! $this->_getUser()->getTwofactorToken()) {
@@ -165,14 +171,13 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             }
 
             // Verify 2FA security code
-            if ($helper->verifyCode($securityCode, $secret)) {
+            if (Mage::helper('twofactorauth/auth')->verifyCode($securityCode, $secret)) {
                 try {
                     $this->_getUser()->setTwofactorToken($secret)->save();
                     $this->_getSession()->unsTfaNotAssociated();
                 }
                 catch (Exception $e) {
-                    Mage::logException($e);
-                    $this->_getSession()->addError($this->__('An error occurred while saving the security code.'));
+                    $this->_getSession()->addException($e, $this->__('An error occurred while saving the security code.'));
                     $this->_redirect('*/*/qr');
                     return;
                 }
@@ -181,9 +186,9 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                 $rememberMe = (bool) $this->getRequest()->getPost('remember_me', FALSE);
                 if ($rememberMe) {
                     try {
-                        $cookie = $helper->generateCookie();
+                        $cookie = Mage::helper('twofactorauth/auth')->generateCookie();
                         Mage::getResourceModel('twofactorauth/user_cookie')->saveCookie($this->_getUser()->getId(), $cookie);
-                        $helper->setCookie($cookie);
+                        Mage::helper('twofactorauth/auth')->setCookie($cookie);
                     } catch (Exception $e) {
                         Mage::logException($e);
                     }
@@ -250,16 +255,34 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                 $this->_getSession()->addError($e->getMessage());
                 $this->_redirect('*/*/qr');
                 return;
-
             } catch (Exception $e) {
-                $this->_getSession()->addError($this->__('An error occurred while saving the secret questions.'));
+                $this->_getSession()->addException($e, $this->__('An error occurred while saving the secret questions.'));
                 $this->_redirect('*/*/qr');
                 return;
             }
         }
 
-        $this->_redirect('*');
+        $this->_redirect('*/*/qr');
         return;
+    }
+
+    /**
+     * 2FA edit action
+     */
+    public function editAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
+     * 2FA save action
+     */
+    public function saveAction()
+    {
+        if ( ! $this->getRequest()->isPost()) {
+            return;
+        }
     }
 
     /**
@@ -269,7 +292,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     {
         if ( ! $this->_getUser()->getTwofactorToken()) {
             $this->_getSession()->addError($this->__('Two-Factor Authentication is not configured so cannot be reset.'));
-            $this->_redirect('*/*/qr');
+            $this->_redirect('*/*/edit');
             return;
         }
 
@@ -282,16 +305,18 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             $resource->commit();
             $this->_getSession()->addSuccess($this->__('Two-Factor Authentication has been reset.'));
         } catch (Exception $e) {
-            $this->_getSession()->addError($this->__('An unexpected error occurred while resetting the Two-Factor Authentication.'));
             $resource->rollBack();
+            $this->_getSession()->addException($e, $this->__('An unexpected error occurred while resetting the Two-Factor Authentication.'));
         }
 
+        /*
         // Logout the user
         $adminSession = Mage::getSingleton('admin/session');
         $adminSession->unsetAll();
         $adminSession->getCookie()->delete($adminSession->getSessionName());
+        */
 
-        $this->_redirect('*/*/qr');
+        $this->_redirect('*/*/edit');
         return;
     }
 
@@ -317,8 +342,8 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         }
 
         $action = $this->getRequest()->getActionName();
-        $hasToken = !! $this->_getUser()->getTwofactorToken();
-        $authenticated = ! Mage::getSingleton('adminhtml/session')->getTfaNotEntered();
+        $hasToken = $this->_hasToken();
+        $authenticated = $this->_isAuthenticated();
 
         if (in_array($action, array('question', 'answer'))) {
             return $hasToken;
@@ -328,10 +353,34 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             return ( ! $hasToken || ($hasToken && $authenticated));
         }
 
+        if (in_array($action, array('edit', 'save'))) {
+            return ($hasToken && $authenticated);
+        }
+
         if ( ! $authenticated && in_array($action, array('clearCookies', 'reset'))) {
             return FALSE;
         }
 
         return TRUE;
+    }
+
+    /**
+     * Check whether the user is authenticated with 2FA
+     *
+     * @return bool
+     */
+    protected function _isAuthenticated()
+    {
+        return ! Mage::getSingleton('adminhtml/session')->getTfaNotEntered();
+    }
+
+    /**
+     * Check whether the user has authentication token
+     *
+     * @return bool
+     */
+    protected function _hasToken()
+    {
+        return !! $this->_getUser()->getTwofactorToken();
     }
 }
