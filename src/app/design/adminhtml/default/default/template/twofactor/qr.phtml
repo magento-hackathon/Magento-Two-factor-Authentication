@@ -65,7 +65,16 @@
                             <span><?php echo Mage::helper('twofactorauth')->__('Scan the QR code into Google Authenticator, then enter the code here and click save.') ?></span>
                             <div>
                                 <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />
-                                <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. Do not use this feature on public computers.') ?>
+                                <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. Do not use this feature on public computers.') ?><br />
+                                <?php if ($this->getRequest()->getParam('manual')): ?>
+                                <div class="manual-key">
+                                    <?php echo $this->__('Account Name: %s', Mage::helper('twofactorauth/auth')->getStoreName()) ?><br />
+                                    <?php echo $this->__('Key: ') ?><strong><?php echo $this->getQrCodeSecret() ?></strong><br />
+                                    <?php echo $this->__('Type: Time based') ?>
+                                </div>
+                                <?php else: ?>
+                                    <a href="<?php echo $this->getManualKeyUrl() ?>"><?php echo $this->__('Enter key manually') ?></a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
@@ -79,23 +88,6 @@
             </div>
         </fieldset>
     </form>
-    <script type="text/javascript">
-        var loginForm = new varienForm('qrForm');
-        function generateOneTimeCode(iterator) {
-            var code = '';
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$*-.=?@_";
-            for (var i = 0; i < 10; i++) {
-                code += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-            var question = $$('[name="questions['+iterator+'][question]"')[0];
-            var answer = $$('[name="questions['+iterator+'][answer]"')[0];
-            if (question && answer) {
-                question.value = 'Secret Code #'+(iterator+1);
-                answer.type = 'text';
-                answer.value = code;
-            }
-        }
-    </script>
 </div>
 </body>
 </html>

@@ -12,6 +12,8 @@ div#qr table.questions tbody button.generate { margin: 3px; }
 
 div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }
 
+div#qr div.manual-key { padding-top:5px; }
+
 /* Edit 2FA */
 div#qr.qr-edit { margin:0; }
 

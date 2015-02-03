@@ -32,6 +32,18 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * Calculate the code, with given secret and point in time
+     *
+     * @param string $secret
+     * @param int|null $timeSlice
+     * @return string
+     */
+    public function getCode($secret, $timeSlice = null)
+    {
+        return $this->_getAuth()->getCode($secret, $timeSlice);
+    }
+
+    /**
      * Get the image url to a new QR code
      *
      * @param string $name

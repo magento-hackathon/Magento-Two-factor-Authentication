@@ -40,4 +40,14 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Qr extends Mage_Adminhtml_Block_
     {
         return Mage::getSingleton('admin/session')->getUser();
     }
+
+    /**
+     * Retrieve manual key url
+     *
+     * @return string
+     */
+    public function getManualKeyUrl()
+    {
+        return $this->getUrl('adminhtml/twofactorauth/qr', array('manual' => 1, '_current' => TRUE));
+    }
 }

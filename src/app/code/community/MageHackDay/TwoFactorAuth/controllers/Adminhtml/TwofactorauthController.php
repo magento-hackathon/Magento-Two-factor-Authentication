@@ -299,14 +299,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             $this->_getSession()->addException($e, $this->__('An unexpected error occurred while resetting the Two-Factor Authentication.'));
         }
 
-        /*
         // Logout the user
         $adminSession = Mage::getSingleton('admin/session');
         $adminSession->unsetAll();
         $adminSession->getCookie()->delete($adminSession->getSessionName());
-        */
 
-        $this->_redirect('*/*/edit');
+        $this->_redirect('*');
         return;
     }
 
