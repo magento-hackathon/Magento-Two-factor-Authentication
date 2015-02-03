@@ -32,6 +32,7 @@
     <title><?php echo Mage::helper('adminhtml')->__('Two Factor Authentication'); ?></title>
     <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('reset.css'); ?>" media="all" />
     <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('boxes.css'); ?>" media="all" />
+    <link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('twofactorauth.css'); ?>" media="all" />
     <link rel="icon" href="<?php echo $this->getSkinUrl('favicon.ico'); ?>" type="image/x-icon" />
     <link rel="shortcut icon" href="<?php echo $this->getSkinUrl('favicon.ico'); ?>" type="image/x-icon" />
 
@@ -47,12 +48,15 @@
         <form method="post" action="<?php echo $this->getUrl('adminhtml/twofactorauth/verify') ?>" id="loginForm">
             <fieldset class="login-form">
                 <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
-                <h2><?php echo Mage::helper('twofactorauth')->__('Please enter your One Time Password'); ?></h2>
+                <h2><?php echo Mage::helper('twofactorauth')->__('Please enter Google Authenticator verification code'); ?></h2>
+                <div class="account-name">
+                    <?php echo $this->__('Account Name: %s', Mage::helper('twofactorauth/auth')->getStoreName()) ?>
+                </div>
                 <div id="messages">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
                 </div>
                 <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('twofactorauth')->__('Security Code'); ?></label><br />
-                    <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text" style="width:461px;" />
+                    <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text" />
                 </div>
                 <div>
                     <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />

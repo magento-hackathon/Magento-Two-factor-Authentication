@@ -14,3 +14,7 @@ div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }
 
 /* Edit 2FA */
 div#qr.qr-edit { margin:0; }
+
+/* Interstitial Page */
+body#page-login div.account-name { padding-bottom:5px; }
+body#page-login input#input_code { width:461px; }

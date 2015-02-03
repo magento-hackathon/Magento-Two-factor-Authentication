@@ -1,6 +1,6 @@
 <form method="post" action="<?php echo $this->getSaveUrl(); ?>" id="loginForm">
     <fieldset class="login-form">
-        <h2><?php echo Mage::helper('twofactorauth')->__('Please enter your One Time Password'); ?></h2>
+        <h2><?php echo Mage::helper('twofactorauth')->__('Please enter Google Authenticator verification code'); ?></h2>
         <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('twofactorauth')->__('Code:'); ?></label><br />
             <input type="text" id="code" name="code" value="" class="required-entry input-text" />
         </div>
