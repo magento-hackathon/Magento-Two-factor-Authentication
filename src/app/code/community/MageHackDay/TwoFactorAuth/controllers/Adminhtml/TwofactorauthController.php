@@ -276,16 +276,6 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     }
 
     /**
-     * 2FA save action
-     */
-    public function saveAction()
-    {
-        if ( ! $this->getRequest()->isPost()) {
-            return;
-        }
-    }
-
-    /**
      * Reset Two-Factor Authentication
      */
     public function resetAction()
@@ -335,10 +325,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     protected function _isAllowed()
     {
-        $acl = 'admin/system/myaccount/two_factor_auth';
-        $isAllowed = Mage::getSingleton('admin/session')->isAllowed($acl);
-        if ( ! $isAllowed) {
-            return FALSE;
+        if ( ! Mage::getStoreConfig('admin/security/force_for_backend')) {
+            $acl = 'admin/system/myaccount/two_factor_auth';
+            $isAllowed = Mage::getSingleton('admin/session')->isAllowed($acl);
+            if ( ! $isAllowed) {
+                return FALSE;
+            }
         }
 
         $action = $this->getRequest()->getActionName();
