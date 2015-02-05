@@ -323,9 +323,8 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     protected function _isAllowed()
     {
-        if ( ! Mage::getStoreConfig('admin/security/force_for_backend')) {
-            $acl = 'admin/system/myaccount/two_factor_auth';
-            $isAllowed = Mage::getSingleton('admin/session')->isAllowed($acl);
+        if ( ! Mage::helper('twofactorauth')->isForceForBackend()) {
+            $isAllowed = Mage::getSingleton('admin/session')->isAllowed('admin/system/myaccount');
             if ( ! $isAllowed) {
                 return FALSE;
             }
