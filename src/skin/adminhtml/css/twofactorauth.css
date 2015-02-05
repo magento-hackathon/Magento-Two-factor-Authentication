@@ -14,6 +14,11 @@ div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }
 
 div#qr div.manual-key { padding-top:5px; }
 
+div#qr div.remember-me { margin:1em 0; }
+
+div#qr .tfa-help { padding: 10px; background-color: white; border-radius: 10px; box-shadow: 1px 1px 2px #777; margin: 20px; }
+div#qr .tfa-help ol { list-style-type: decimal; margin: 1em 2em; }
+
 /* Edit 2FA */
 div#qr.qr-edit { margin:0; }
 
