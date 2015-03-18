@@ -134,4 +134,14 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
         }
         Mage::getSingleton('core/cookie')->set(self::TWO_FACTOR_AUTH_COOKIE, $_cookie, time() + 60*60*24*365*10);
     }
+
+    /**
+     * Check whether the password was re-entered for sensitive actions.
+     *
+     * @return bool
+     */
+    public function isReAuthenticated()
+    {
+        return (bool) Mage::getSingleton('adminhtml/session')->getData('reauthenticated_2fa', FALSE);
+    }
 }
