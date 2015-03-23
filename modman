@@ -1,8 +1,9 @@
-src/app/code/community/MageHackDay/TwoFactorAuth/ app/code/community/MageHackDay/TwoFactorAuth/
-src/app/etc/modules/MageHackDay_TwoFactorAuth.xml app/etc/modules/MageHackDay_TwoFactorAuth.xml
-src/app/design/adminhtml/default/default/layout/twofactor.xml app/design/adminhtml/default/default/layout/twofactor.xml
-src/app/design/adminhtml/default/default/template/twofactor app/design/adminhtml/default/default/template/twofactor
-src/lib/GoogleAuthenticator lib/GoogleAuthenticator
-src/app/design/frontend/base/default/layout/twofactorauth.xml app/design/frontend/base/default/layout/twofactorauth.xml
-src/app/design/frontend/base/default/template/twofactorauth app/design/frontend/base/default/template/twofactorauth
-src/skin/frontend/base/default/twofactorauth skin/frontend/base/default/twofactorauth
+src/app/code/community/MageHackDay/TwoFactorAuth/               app/code/community/MageHackDay/TwoFactorAuth/
+src/app/etc/modules/MageHackDay_TwoFactorAuth.xml               app/etc/modules/MageHackDay_TwoFactorAuth.xml
+src/app/design/adminhtml/default/default/layout/twofactor.xml   app/design/adminhtml/default/default/layout/twofactor.xml
+src/app/design/adminhtml/default/default/template/twofactor     app/design/adminhtml/default/default/template/twofactor
+src/lib/GoogleAuthenticator                                     lib/GoogleAuthenticator
+src/app/design/frontend/base/default/layout/twofactorauth.xml   app/design/frontend/base/default/layout/twofactorauth.xml
+src/app/design/frontend/base/default/template/twofactorauth     app/design/frontend/base/default/template/twofactorauth
+src/skin/frontend/base/default/twofactorauth                    skin/frontend/base/default/twofactorauth
+src/skin/adminhtml/css/twofactorauth.css                        skin/adminhtml/default/default/twofactorauth.css

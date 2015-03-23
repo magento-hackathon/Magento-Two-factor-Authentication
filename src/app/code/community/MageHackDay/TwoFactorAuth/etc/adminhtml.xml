@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <myaccount>
+                    <children>
+                        <two_factor_auth translate="title">
+                            <title>Two-Factor Authentication</title>
+                            <action>adminhtml/twofactorauth/edit</action>
+                            <resource>system/myaccount</resource>
+                            <sort_order>10</sort_order>
+                        </two_factor_auth>
+                    </children>
+                </myaccount>
+            </children>
+        </system>
+    </menu>
+</config>

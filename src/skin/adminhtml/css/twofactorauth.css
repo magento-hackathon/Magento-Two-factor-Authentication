@@ -1,0 +1,27 @@
+/* Setup QR code */
+div#qr { width:850px; margin:170px auto; }
+
+div#qr table.qr { width:100%; }
+div#qr table.qr td:first-child { width:220px; }
+div#qr table.qr td:last-child { vertical-align:middle; }
+
+div#qr table.questions { margin:5px 0; }
+div#qr table.questions tbody td { vertical-align: middle; }
+div#qr table.questions tbody input { width:400px; }
+div#qr table.questions tbody button.generate { margin: 3px; }
+
+div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }
+
+div#qr div.manual-key { padding-top:5px; }
+
+div#qr div.remember-me { margin:1em 0; }
+
+div#qr .tfa-help { padding: 10px; background-color: white; border-radius: 10px; box-shadow: 1px 1px 2px #777; margin: 20px; }
+div#qr .tfa-help ol { list-style-type: decimal; margin: 1em 2em; }
+
+/* Edit 2FA */
+div#qr.qr-edit { margin:0; }
+
+/* Interstitial Page */
+body#page-login div.account-name { padding-bottom:5px; }
+body#page-login input#input_code { width:461px; }
