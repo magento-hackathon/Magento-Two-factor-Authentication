@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-        <?php for ($i = 0; $i < 5; $i++): ?>
+        <?php for ($i = 0; $i < 3; $i++): ?>
             <tr>
                 <td><?php echo $i+1 ?></td>
                 <?php foreach (array('question', 'answer') as $field): ?>
@@ -48,8 +48,8 @@
         for (var i = 0; i < 10; i++) {
             code += possible.charAt(Math.floor(Math.random() * possible.length));
         }
-        var question = $$('[name="questions['+iterator+'][question]"')[0];
-        var answer = $$('[name="questions['+iterator+'][answer]"')[0];
+        var question = $$('[name="questions['+iterator+'][question]"]')[0];
+        var answer = $$('[name="questions['+iterator+'][answer]"]')[0];
         if (question && answer) {
             question.value = 'Secret Code #'+(iterator+1);
             answer.type = 'text';
