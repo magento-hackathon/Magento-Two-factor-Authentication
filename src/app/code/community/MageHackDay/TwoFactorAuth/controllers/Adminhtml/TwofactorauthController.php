@@ -167,7 +167,11 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         if ( ! $this->getRequest()->isPost()) {
             return;
         }
-        if ( ! Mage::helper('twofactorauth/auth')->isReAuthenticated() && Mage::app()->getRequest()->getPost('questions')) {
+
+        // Force user to re-authenticate to change secret questions
+        if ($this->_getUser()->getTwofactorToken()
+            && Mage::app()->getRequest()->getPost('questions')
+            && ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
             $this->_getSession()->addError($this->__('Access Denied.'));
             $this->_redirect('*/*/edit');
             return;
