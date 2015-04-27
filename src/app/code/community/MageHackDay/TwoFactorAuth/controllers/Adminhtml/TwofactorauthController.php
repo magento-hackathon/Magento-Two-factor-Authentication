@@ -79,6 +79,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $vSecret = $this->_getUser()->getTwofactorToken();
         if ( ! $vSecret) {
             // User is accessing protected route without configured TFA
+            $this->_getSession()->addError($this->__('Your 2FA token has not been created.'));
             $this->_redirect('*/*/qr');
             return;
         }
@@ -100,7 +101,6 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
 
         $this->_getSession()->unsTfaNotEntered();
         $this->_redirect('*');
-        return;
     }
 
     /**
