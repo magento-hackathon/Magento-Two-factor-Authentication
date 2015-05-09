@@ -66,9 +66,16 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     public function clearCookiesAction()
     {
+        if ( ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
+            $this->_getSession()->addError($this->__('Access Denied.'));
+            $this->_redirect('*/*/edit');
+            return;
+        }
+
         try {
             Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($this->_getUser());
             $this->_getSession()->addSuccess($this->__('Security code will be required on next login.'));
+            Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', FALSE);
         } catch (Exception $e) {
             $this->_getSession()->addException($e, $this->__('An error occurred while forcing security code on next login.'));
         }
@@ -161,6 +168,15 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             return;
         }
 
+        // Force user to re-authenticate to change secret questions
+        if ($this->_getUser()->getTwofactorToken()
+            && Mage::app()->getRequest()->getPost('questions')
+            && ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
+            $this->_getSession()->addError($this->__('Access Denied.'));
+            $this->_redirect('*/*/edit');
+            return;
+        }
+
         // Process secret token if not yet configured
         if ( ! $this->_getUser()->getTwofactorToken()) {
             $secret = (string) $this->getRequest()->getPost('qr_secret');
@@ -246,6 +262,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                     }
                     $resource->commit();
                     $this->_getSession()->addSuccess($this->__('The secret questions have been saved.'));
+                    Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', FALSE);
                 } catch (Exception $e) {
                     $resource->rollBack();
                     Mage::logException($e);
@@ -280,6 +297,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     public function resetAction()
     {
+        if ( ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
+            $this->_getSession()->addError($this->__('Access Denied.'));
+            $this->_redirect('*/*/edit');
+            return;
+        }
+
         if ( ! $this->_getUser()->getTwofactorToken()) {
             $this->_getSession()->addError($this->__('Two-Factor Authentication is not configured so cannot be reset.'));
             $this->_redirect('*/*/edit');
@@ -294,6 +317,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             $resource->deleteQuestions($this->_getUser()->getId());
             $resource->commit();
             $this->_getSession()->addSuccess($this->__('Two-Factor Authentication has been reset.'));
+            Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', FALSE);
         } catch (Exception $e) {
             $resource->rollBack();
             $this->_getSession()->addException($e, $this->__('An unexpected error occurred while resetting the Two-Factor Authentication.'));
@@ -305,6 +329,29 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $adminSession->getCookie()->delete($adminSession->getSessionName());
 
         $this->_redirect('*');
+        return;
+    }
+
+    /**
+     * Validate password
+     */
+    public function passwordAction()
+    {
+        $password = (string)$this->getRequest()->getParam('password');
+        if (empty($password)) {
+            $this->_getSession()->addError($this->__('Invalid request.'));
+            $this->_redirect('*');
+            return;
+        }
+
+        if ( ! Mage::helper('core')->validateHash($password, $this->_getUser()->getPassword())) {
+            $this->_getSession()->addError($this->__('Invalid password.'));
+        } else {
+            $this->_getSession()->addSuccess($this->__('The password was successfully verified.'));
+            Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', TRUE);
+        }
+
+        $this->_redirect('*/*/edit');
         return;
     }
 

@@ -10,7 +10,10 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Edit extends Mage_Adminhtml_Bloc
         $this->_blockGroup = 'twofactorauth';
         $this->_removeButton('delete');
 
-        if (Mage::getResourceModel('twofactorauth/user_cookie')->hasCookies(Mage::getSingleton('admin/session')->getUser()->getId())) {
+        $reAuthenticated = Mage::helper('twofactorauth/auth')->isReAuthenticated();
+        $user = Mage::getSingleton('admin/session')->getUser(); /** @var $user Mage_Admin_Model_User */
+
+        if (Mage::getResourceModel('twofactorauth/user_cookie')->hasCookies($user->getId()) && $reAuthenticated) {
             $this->addButton('clear_2fa_cookies', array(
                 'label'     => Mage::helper('twofactorauth')->__('Force security code on next login'),
                 'onclick'   => 'confirmSetLocation(\''
@@ -19,13 +22,18 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Edit extends Mage_Adminhtml_Bloc
             ));
         }
 
-        $this->addButton('reset_2fa', array(
-            'label'     => Mage::helper('twofactorauth')->__('Reset authentication completely'),
-            'onclick'   => 'confirmSetLocation(\''
-                . Mage::helper('twofactorauth')->__('Are you sure you want to reset authentication completely?')
-                . '\', \'' . $this->getUrl('adminhtml/twofactorauth/reset') . '\')'
-        ));
+        if ($reAuthenticated) {
+            $this->addButton('reset_2fa', array(
+                'label'     => Mage::helper('twofactorauth')->__('Reset authentication completely'),
+                'onclick'   => 'confirmSetLocation(\''
+                    . Mage::helper('twofactorauth')->__('Are you sure you want to reset authentication completely?')
+                    . '\', \'' . $this->getUrl('adminhtml/twofactorauth/reset') . '\')'
+            ));
+        }
 
+        if ( ! $reAuthenticated) {
+            $this->updateButton('save', 'label', $this->__('Submit Password'));
+        }
     }
 
     public function getHeaderText()
