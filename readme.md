@@ -19,15 +19,18 @@ by third parties.
 
 ### How to use it
 
-- Install Google Authenticator app to your smartphone
-- Install this extension via composer or modman
+- Install [Google Authenticator](https://support.google.com/accounts/answer/1066447?hl=de) app to your smartphone
+- Install this extension via [Composer](https://getcomposer.org/) or [modman](https://github.com/colinmollenhour/modman)
 - Log in to Magento admin
 - You will be requested to scan the QR code with the Google Authenticator app and define security questions
 - Continue Log in
 
-### TBD
+### Installation using Composer
 
-- Write docs about how to install this extension to your Magento with composer.
+Add `"magento-hackathon/magento-two-factor-authentication": "*"` to the `require` section of your `composer.json` file or
+add it by calling the Composer shell command:
+
+    composer require magento-hackathon/magento-two-factor-authentication:*
 
 ### Contributors
 
