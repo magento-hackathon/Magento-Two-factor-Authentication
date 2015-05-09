@@ -20,7 +20,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     {
       Mage::getSingleton('adminhtml/session')->getCookie()->delete("adminhtml");
       Mage::getSingleton('adminhtml/session')->addSuccess( $this->__("You have been logged out.") );
-      $this->_redirect('adminhtml/twofactorauth/interstitial');
+      $this->_redirect('adminhtml/index');
     }
 
     public function interstitialAction()
