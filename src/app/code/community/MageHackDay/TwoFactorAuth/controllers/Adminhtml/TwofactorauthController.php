@@ -16,6 +16,13 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $this->setUsedModuleName('MageHackDay_TwoFactorAuth');
     }
 
+    public function logoutAction()
+    {
+      Mage::getSingleton('adminhtml/session')->getCookie()->delete("adminhtml");
+      Mage::getSingleton('adminhtml/session')->addSuccess( $this->__("You have been logged out.") );
+      $this->_redirect('adminhtml/twofactorauth/interstitial');
+    }
+
     public function interstitialAction()
     {
         if (Mage::helper('twofactorauth/auth')->isAuthorized($this->_getUser())) {
@@ -417,6 +424,13 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     protected function _hasToken()
     {
-        return !! $this->_getUser()->getTwofactorToken();
+        $user = $this->_getUser();
+
+        if (!$user)
+        {
+          return false;
+        }
+
+        return !! $user->getTwofactorToken();
     }
 }
