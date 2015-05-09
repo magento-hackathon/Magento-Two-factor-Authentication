@@ -6,7 +6,7 @@
                 <myaccount>
                     <children>
                         <two_factor_auth translate="title">
-                            <title>Two-Factor Authentication</title>
+                            <title>Two Factor Authentication</title>
                             <action>adminhtml/twofactorauth/edit</action>
                             <resource>system/myaccount</resource>
                             <sort_order>10</sort_order>
