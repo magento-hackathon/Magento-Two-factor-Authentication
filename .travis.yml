@@ -1,0 +1,17 @@
+language: php
+php:
+  - 5.4
+env:
+  matrix:
+    - MAGENTO_VERSION=magento-ce-1.9.1.0
+before_script:
+  - curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+  - phpenv rehash
+  - git clone https://github.com/AOEpeople/magento-coding-standard $(pear config-get php_dir)/PHP/CodeSniffer/Standards/Ecg
+script:
+  # Code Style
+  - php phpcs.phar --config-set ignore_warnings_on_exit --standard=$(pear config-get php_dir)/PHP/CodeSniffer/Standards/Ecg --encoding=utf-8 --report-width=180 ./app
+  # Unit Tests
+  - curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
+notifications:
+  email: false
