@@ -32,6 +32,10 @@ How to use it:
 - Log out
 - Log in again and you should be displayed
 
+Manage Secret Questions
+---
+Edit your secret questions and answers under `System` > `My Account` > Two-Factor Authentication`.
+
 TBD:
 -
 - Add unit tests for models, helpers, possibly for controllers
