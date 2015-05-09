@@ -53,7 +53,7 @@ class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_
                 if ($authHelper->verifyCode($code, $secret)) {
                     $customer->setTwofactorauthToken($secret);
                 } else {
-                    throw new MageHackDay_TwoFactorAuth_Model_Exception('The code you entered was invalid.');
+                    throw new MageHackDay_TwoFactorAuth_Model_Exception('The secret code you entered was invalid.');
                 }
             }
             // The user is turning off 2fa, unset their token

@@ -30,7 +30,7 @@ class MageHackDay_TwoFactorAuth_InterstitialController extends Mage_Core_Control
 
         // The code was invalid, redirect the user back to the interstitial
         if (!$authHelper->verifyCode($code, $customer->getTwofactorauthToken())) {
-            Mage::getSingleton('core/session')->addError('The code you entered was invalid.  Please try again.');
+            Mage::getSingleton('core/session')->addError('The secret code you entered was invalid. Please try again.');
             $this->_redirect('twofactorauth/interstitial');
             return;
         }

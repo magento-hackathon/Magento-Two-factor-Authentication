@@ -87,7 +87,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $collection->setCurPage(1)->setPageSize(1);
         $question = $collection->getFirstItem();
         if ( ! $question->getId()) {
-            $this->_getSession()->addError($this->__('Cannot load security question.'));
+            $this->_getSession()->addError($this->__('Cannot load the secret question.'));
             $this->_redirect('*/*/interstitial');
             return;
         }
@@ -215,7 +215,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                     }
                 }
                 if ($invalidQuestion) {
-                    throw new Mage_Core_Exception($this->__('Questions with empty question or answer cannot be saved.'));
+                    throw new Mage_Core_Exception($this->__('Secret questions with empty question or answer cannot be saved.'));
                 }
                 if (count($questions) == 0) {
                     throw new Mage_Core_Exception($this->__('At least one secret question is required.'));
