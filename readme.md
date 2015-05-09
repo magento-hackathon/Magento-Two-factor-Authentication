@@ -1,5 +1,6 @@
 Magento: Two-Factor-Authentication
 =====================
+[![Build Status](https://travis-ci.org/magento-hackathon/Magento-Two-factor-Authentication.svg?branch=master)](https://travis-ci.org/magento-hackathon/Magento-Two-factor-Authentication)
 
 ----------
 
