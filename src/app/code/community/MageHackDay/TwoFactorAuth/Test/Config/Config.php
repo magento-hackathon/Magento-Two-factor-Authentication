@@ -16,4 +16,13 @@ class MageHackDay_TwoFactorAuth_Test_Config_Config extends EcomDev_PHPUnit_Test_
     {
         $this->assertModuleCodePool('community');
     }
+
+    /**
+     * @test
+     * @return void
+     */
+    public function moduleVersionIsSet()
+    {
+        $this->assertModuleVersionGreaterThan('0.0.1');
+    }
 }
