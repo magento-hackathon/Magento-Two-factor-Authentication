@@ -72,6 +72,9 @@
                 </div>
                 <div class="clear"></div>
                 <?php endif; ?>
+              <div>
+                <a class="right" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
+              </div>
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
                 <div class="clear"></div>
                 <div class="form-buttons">
