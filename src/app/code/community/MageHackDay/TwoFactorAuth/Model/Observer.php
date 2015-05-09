@@ -14,22 +14,22 @@ class MageHackDay_TwoFactorAuth_Model_Observer
         }
 
         $event = $observer->getEvent();
-        $username = $event->getUsername();
         $user = $event->getUser(); /** @var $user Mage_Admin_Model_User */
         if (Mage::helper('twofactorauth/auth')->isAuthorized($user)) {
             return;
         }
 
+        /*
+         * If 2FA is not forced for all backend users, check if user has access to protected resources.
+         * If user has no access to protected resources, 2FA authentication is not necessary
+         */
         $bTfaRequired = FALSE;
         if (Mage::helper('twofactorauth')->isForceForBackend()) {
             $bTfaRequired = TRUE;
         } else {
-            $oRole = $user->getRole();
-            $aResources = $oRole->getResourcesList2D();
-            $vSerializedProtectedResources = Mage::getStoreConfig('admin/security/twofactorauth_protected_resources');
-            $aProtectedResources = unserialize($vSerializedProtectedResources);
-            foreach ($aProtectedResources as $vResourceId => $aProtectedResource) {
-                if (Mage::getSingleton('admin/session')->isAllowed($aProtectedResource['resource_id'])) {
+            $aProtectedResources = explode(',',Mage::getStoreConfig('admin/security/twofactorauth_protected_resources'));
+            foreach ($aProtectedResources as $aProtectedResource) {
+                if (Mage::getSingleton('admin/session')->isAllowed($aProtectedResource)) {
                     $bTfaRequired = TRUE;
                     break;
                 }
