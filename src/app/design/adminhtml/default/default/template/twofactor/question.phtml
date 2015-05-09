@@ -60,7 +60,7 @@
                     <label><?php echo Mage::helper('twofactorauth')->__('Question:') ?></label><br />
                     <?php echo $this->getSecretQuestion()->getQuestion() ?>
                 </div>
-                <div class="input-box forgot-password"><label for="answer"><?php echo Mage::helper('twofactorauth')->__('Answer'); ?></label><br />
+                <div class="input-box forgot-password"><label for="answer"><?php echo Mage::helper('twofactorauth')->__('Answer:'); ?></label><br />
                     <input type="password" id="answer" name="answer" value="" class="required-entry input-text" style="width:461px;" />
                 </div>
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
