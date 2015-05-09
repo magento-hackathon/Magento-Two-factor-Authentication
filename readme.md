@@ -19,7 +19,7 @@ by third parties.
 
 ### How to use it
 
-- Install Google Authenticator app to your smartphone
+- Install [Google Authenticator](https://support.google.com/accounts/answer/1066447?hl=de) app to your smartphone
 - Install this extension via [Composer](https://getcomposer.org/) or [modman](https://github.com/colinmollenhour/modman)
 - Log in to Magento admin
 - You will be requested to scan the QR code with the Google Authenticator app and define security questions
