@@ -18,7 +18,9 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
 
     public function logoutAction()
     {
-      Mage::getSingleton('adminhtml/session')->getCookie()->delete("adminhtml");
+      Mage::getSingleton('adminhtml/session')->getCookie()->delete(
+          Mage::getSingleton('adminhtml/session')->getSessionName()
+      );
       Mage::getSingleton('adminhtml/session')->addSuccess( $this->__("You have been logged out.") );
       $this->_redirect('adminhtml/twofactorauth/interstitial');
     }
@@ -319,9 +321,20 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         $resource = Mage::getResourceModel('twofactorauth/user_question');
         try {
             $resource->beginTransaction();
-            $this->_getUser()->setTwofactorToken(NULL)->save();
-            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($this->_getUser());
-            $resource->deleteQuestions($this->_getUser()->getId());
+
+            $userId = $this->getRequest()->getParam('user_id');
+            $user = $this->_getUser();
+            if ( !empty($userId) )
+            {
+                $user = Mage::getModel('admin/user')->load($userId);
+                if ( !$user->getId() )
+                {
+                    return;
+                }
+            }
+            $user->setTwofactorToken(NULL)->save();
+            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($user);
+            $resource->deleteQuestions($user->getId());
             $resource->commit();
             $this->_getSession()->addSuccess($this->__('Two-Factor Authentication has been reset.'));
             Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', FALSE);
@@ -331,9 +344,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         }
 
         // Logout the user
-        $adminSession = Mage::getSingleton('admin/session');
-        $adminSession->unsetAll();
-        $adminSession->getCookie()->delete($adminSession->getSessionName());
+        if ( empty($userId) )
+        {
+          $adminSession = Mage::getSingleton('admin/session');
+          $adminSession->unsetAll();
+          $adminSession->getCookie()->delete($adminSession->getSessionName());
+        }
 
         $this->_redirect('*');
         return;
