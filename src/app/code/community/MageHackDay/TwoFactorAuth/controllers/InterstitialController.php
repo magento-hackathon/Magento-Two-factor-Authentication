@@ -39,7 +39,7 @@ class MageHackDay_TwoFactorAuth_InterstitialController extends Mage_Core_Control
         $session = $this->_getSession();
 
         if (!$redirectUrl = $session->getOriginalAfterAuthUrl()) {
-            $redirectUrl = Mage::getModel('core/url')->getUrl('customer/account/dashboard');
+            $redirectUrl = Mage::getModel('core/url')->getUrl('customer/account');
         }
 
         $this->_redirectUrl($redirectUrl);

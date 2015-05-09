@@ -133,6 +133,7 @@
             <?php echo $this->getChildHtml('questions') ?>
             <div class="form-buttons">
                 <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back'); ?></a>
+                <a class="left abort" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
                 <button onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
             </div>
         </fieldset>
