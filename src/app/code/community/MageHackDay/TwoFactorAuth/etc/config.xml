@@ -117,4 +117,11 @@
             </security>
         </admin>
     </default>
+    <phpunit>
+        <suite>
+            <modules>
+                <MageHackDay_TwoFactorAuth />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
