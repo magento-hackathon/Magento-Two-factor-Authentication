@@ -29,7 +29,7 @@
                     </td>
                 <?php endforeach; ?>
                 <td>
-                    <button class="generate" onclick="generateOneTimeCode(<?php echo json_encode($i) ?>)" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Generate'); ?></span></span></span></button>
+                    <button class="generate" onclick="generateOneTimeAnswer(<?php echo json_encode($i) ?>);" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Generate'); ?></span></span></span></button>
                 </td>
             </tr>
         <?php endfor; ?>
@@ -42,7 +42,8 @@
 </div>
 <script type="text/javascript">
     var loginForm = new varienForm('qrForm');
-    function generateOneTimeCode(iterator) {
+
+    function generateOneTimeAnswer(iterator) {
         var code = '';
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$*-.=?@_";
         for (var i = 0; i < 10; i++) {

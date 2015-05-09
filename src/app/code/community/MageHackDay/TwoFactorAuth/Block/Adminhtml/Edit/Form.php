@@ -18,7 +18,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Edit_Form extends Mage_Adminhtml
             $form->addField('questions', 'secret_questions', array('name' => 'questions'));
         } else {
             $fieldset = $form->addFieldset('reenter_password', array(
-                'legend' => Mage::helper('twofactorauth')->__('Re-enter Password')
+                'legend' => Mage::helper('twofactorauth')->__('Re-enter admin password')
             ));
             $fieldset->addField('password', 'password', array(
                 'label'    => Mage::helper('twofactorauth')->__('Password'),
