@@ -27,10 +27,10 @@ by third parties.
 
 ### Installation using Composer
 
-Add `"magento-hackathon/hackathonwebsite_projectidea": "*"` to the `require` section of your `composer.json` file or
+Add `"magento-hackathon/magento-two-factor-authentication": "*"` to the `require` section of your `composer.json` file or
 add it by calling the Composer shell command:
 
-    composer require magento-hackathon/hackathonwebsite_projectidea:*
+    composer require magento-hackathon/magento-two-factor-authentication:*
 
 ### Contributors
 
