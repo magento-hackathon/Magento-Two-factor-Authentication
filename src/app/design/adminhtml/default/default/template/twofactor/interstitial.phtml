@@ -59,26 +59,24 @@
                 <div id="messages">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
                 </div>
-                <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('twofactorauth')->__('Security Code'); ?></label><br />
-                    <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text" />
+                <div class="input-box forgot-password">
+                    <p><label for="email""><?php echo Mage::helper('twofactorauth')->__('Security Code'); ?></label></p>
+                    <input type="text" id="input_code" name="input_code" value="" class="required-entry input-text tfa__input-text" />
                 </div>
                 <div>
-                    <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />
-                    <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?>
+                    <p><input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label></p>
+                    <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?></p>
                 </div>
                 <?php if ($this->hasSecretQuestion()): ?>
-                <div>
                     <a class="left" href="<?php echo $this->getUrl('adminhtml/twofactorauth/question'); ?>"><?php echo Mage::helper('twofactorauth')->__('Use a One Time Security Question'); ?></a>
-                </div>
                 <div class="clear"></div>
                 <?php endif; ?>
-              <div>
-                <a class="right" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
-              </div>
+
                 <?php echo $this->getChildHtml('form.additional.info'); ?>
                 <div class="clear"></div>
                 <div class="form-buttons">
-                    <button class="forgot-password" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Submit Code'); ?></span></span></span></button>
+                    <a class="left" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
+                    <button onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('adminhtml')->__('Submit Code'); ?></span></span></span></button>
                 </div>
             </fieldset>
             <p class="legal"><?php echo Mage::helper('adminhtml')->__('Magento is a trademark of Magento Inc. Copyright &copy; %s Magento Inc.', date('Y')); ?></p>
