@@ -77,6 +77,15 @@
                 </twofactorauth>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <twofactorauth>
+                    <files>
+                        <default>MageHackDay_TwoFactorAuth.csv</default>
+                    </files>
+                </twofactorauth>
+            </modules>
+        </translate>
     </adminhtml>
     <frontend>
         <events>
@@ -106,6 +115,15 @@
                 </args>
             </twofactorauth>
         </routers>
+        <translate>
+            <modules>
+                <twofactorauth>
+                    <files>
+                        <default>MageHackDay_TwoFactorAuth.csv</default>
+                    </files>
+                </twofactorauth>
+            </modules>
+        </translate>
     </frontend>
     <default>
         <admin>
