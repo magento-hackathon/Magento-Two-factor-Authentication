@@ -46,99 +46,128 @@
     <!--[if lt IE 7]> <link rel="stylesheet" href="<?php echo $this->getSkinUrl('below_ie7.css'); ?>" type="text/css" media="all" /> <![endif]-->
     <!--[if IE 7]> <link rel="stylesheet" href="<?php echo $this->getSkinUrl('ie7.css'); ?>" type="text/css" media="all" /> <![endif]-->
 </head>
-<body>
-<div id="qr">
-    <form method="post" id="qrForm" action="<?php echo $this->getUrl('adminhtml/twofactorauth/qrSubmit') ?>">
-        <fieldset>
-            <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
-            <div id="messages">
-                <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
-            </div>
-            <h2 style="text-align:center;"><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication Setup'); ?></h2>
-            <?php /* QR code */ ?>
+<body id="page-login">
+
+<div class="login-container">
+    <div class="login-box tfa">
+        <form method="post" id="qrForm" action="<?php echo $this->getUrl('adminhtml/twofactorauth/qrSubmit') ?>">
+
+            <fieldset class="login-form">
+                <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
+                <h2 style="text-align:center;"><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication Setup'); ?></h2>
+
+                <div id="messages">
+                    <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
+                </div>
+
+            </fieldset>
+
             <?php if ($this->getUser()->getTwofactorToken()): // Display reset link ?>
                 <a href="<?php echo $this->getUrl('adminhtml/twofactorauth/reset') ?>" title="<?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>"><?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?></a>
             <?php else: // Display QR code ?>
-                <table class="qr">
-                    <tr>
-                        <td>
-                            <img src="<?php echo $this->getQrCodeUrl() ?>" alt="<?php echo Mage::helper('twofactorauth')->__('QR Code') ?>" width="200px" height="200px"/>
+
+                <div class="tfa__login legal">
+                    <div class="tfa__qr">
+                        <img src="<?php echo $this->getQrCodeUrl() ?>" alt="<?php echo Mage::helper('twofactorauth')->__('QR Code') ?>" width="200px" height="200px"/>
+                        <div class="tfa__manual-entry">
                             <a href="javascript:void(0);"
                                onclick="$('manual-key').show(); $(this).hide()"
-                               style="float:right; clear:both;"><?php echo $this->__('Enter key manually') ?></a>
-                            <div id="manual-key" style="display:none;">
-                                <?php echo $this->__('Account Name: %s', Mage::helper('twofactorauth/auth')->getStoreName()) ?><br />
-                                <?php echo $this->__('Key: ') ?><strong><?php echo $this->getQrCodeSecret() ?></strong><br />
-                                <?php echo $this->__('Type: Time-based') ?>
-                            </div>
-                        </td>
-                        <td>
+                               ><?php echo $this->__('Enter key manually') ?>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="tfa__info">
+                        <h3 class="tfa__label">
                             <label for="security_code"><?php echo Mage::helper('twofactorauth')->__('Security Code') ?></label><br />
-                            <input type="text" id="security_code" name="security_code" value="" class="required-entry input-text" /><br />
-                            <input type="hidden" name="qr_secret" value="<?php echo $this->getQrCodeSecret() ?>" />
-                            <span><?php echo Mage::helper('twofactorauth')->__('Scan the QR code into Google Authenticator, then enter the code here and click save.') ?></span>
-                            <div class="remember-me">
-                                <input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label><br />
-                                <?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?><br />
-                            </div>
-                            <h3><a href="javascript:void(0);"
-                                   onclick="$('what-is-this-qr').show(); $(this.parentNode).hide()"
-                                ><?php echo $this->__('What is this?') ?></a></h3>
-                        </td>
-                    </tr>
-                </table>
-                <div id="what-is-this-qr" class="tfa-help" style="display: none;">
-                    <p>
-                        <?php echo $this->__('Two-Factor Authentication protects your account from unauthorized access by requiring a second authentication method. In this case the second method is a Time-based One Time Password (TOTP).'); ?>
-                        <?php echo $this->__('Google Authenticator is a general-purpose app which provides TOTP codes. It does not require a Google account, but does require a compatible device. Other TOTP applications compatible with Google Authenticator should work as well.'); ?>
-                    </p>
-                    <p>
-                        <?php echo $this->__('After the initial setup is complete you will need to use the app to enter the 6-digit TOTP when authenticating on unrecognized computers.'); ?>
-                        <?php echo $this->__('Choosing "Remember Me" will set a cookie which will prevent you from having to enter the TOTP again on this device/browser, but authenticating on other devices/browsers will still require the TOTP.'); ?>
-                    </p>
-                    <ol>
-                        <li>
-                            <?php echo $this->__('Install Google Authenticator or a similar app if you have not done so already.') ?>
-                            <br/>
-                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2"><img alt="Android app on Google Play"
-                                   src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png"
-                                   width="129"
-                                   height="45"/></a>
-                            <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8&uo=4"
-                               target="_blank"
-                               style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}
-                            "></a>
-                            <a href="http://appworld.blackberry.com/webstore/content/22517879/?countrycode=US&lang=en" target="_blank">BlackBerry</a>
-                            <a href="http://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b" target="_blank">Windows Phone</a>
-                        </li>
-                        <li><?php echo $this->__('Choose "Set up account" (or equivalent) and either scan the barcode above or click "Enter key manually" to display a key which may be entered using the keyboard.') ?></li>
-                        <li><?php echo $this->__('Enter the 6-digit TOTP code for the newly added account above and click "Save".') ?></li>
-                    </ol>
-                    <?php echo $this->__('Note: This additional level of security does not replace the need for a strong and secret password and proper precautions to keep your account credentials secure should always be taken seriously.'); ?>
+                            <a href="javascript:void(0);"
+                               onclick="$('what-is-this-qr').show(); $(this).hide()"
+                                ><?php echo $this->__('What is this?') ?></a>
+                            </h3>
+                        <p><?php echo Mage::helper('twofactorauth')->__('Scan the QR code into Google Authenticator, then enter the code here and click save.') ?></p>
+                        <input type="text" id="security_code" name="security_code" value="" class="required-entry input-text tfa__input-text" /><br />
+                        <div class="remember-me">
+                            <p><input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label></p>
+                            <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?></p>
+                        </div>
+
+                        <input type="hidden" name="qr_secret" value="<?php echo $this->getQrCodeSecret() ?>" />
+                    </div>
+                    <div class="form-buttons tfa__buttons">
+                        <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back'); ?></a>
+                        <a class="left abort" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
+                        <button onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
+                    </div>
                 </div>
+
             <?php endif; ?>
-            <?php /* Secret questions */ ?>
-            <h3 style="margin-top: 2em;">
-                <?php echo $this->__('Single-Use Backup Questions') ?>
-                <a href="javascript:void(0);"
-                   onclick="$('what-is-this-q').show(); $(this).hide()"
-                   style="font-size: 80%"><?php echo $this->__('What is this?') ?></a>
-            </h3>
-            <div id="what-is-this-q" class="tfa-help" style="display: none;">
-                <?php echo $this->__('In the case that your TOTP app (e.g. Google Authenticator) becomes inoperable or is inaccessible you may use a secret question/answer pair to bypass the TOTP.'); ?>
-                <?php echo $this->__('Use only very secure questions and answers, or generate random answers and store them in a secure location and do not store them alongside your full account credentials.'); ?>
-                <?php echo $this->__('The Answer to the Question will never be stored or displayed in plain-text.'); ?>
+
+            <div class="tfa__questions">
+                <h3>
+                    <?php echo $this->__('Single-Use Backup Questions') ?>
+                    <a href="javascript:void(0);"
+                       onclick="$('what-is-this-q').show(); $(this).hide()"
+                       style="font-size: 80%"><?php echo $this->__('What is this?') ?></a>
+                </h3>
+                <div id="what-is-this-q" class="tfa-help" style="display: none;">
+                    <?php echo $this->__('In the case that your TOTP app (e.g. Google Authenticator) becomes inoperable or is inaccessible you may use a secret question/answer pair to bypass the TOTP.'); ?>
+                    <?php echo $this->__('Use only very secure questions and answers, or generate random answers and store them in a secure location and do not store them alongside your full account credentials.'); ?>
+                    <?php echo $this->__('The Answer to the Question will never be stored or displayed in plain-text.'); ?>
+                </div>
+                <?php echo $this->getChildHtml('questions') ?>
             </div>
 
-            <?php echo $this->getChildHtml('questions') ?>
-            <div class="form-buttons">
-                <a class="left" href="<?php echo $this->getUrl('adminhtml', array('_nosecret' => true)); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back'); ?></a>
-                <a class="left abort" href="<?php echo $this->getUrl('adminhtml/twofactorauth/logout') ?>"><?php echo Mage::helper('twofactorauth')->__('abort'); ?></a>
-                <button onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Save'); ?></span></span></span></button>
+            <div id="manual-key" class="tfa__manual-key" style="display:none;">
+                <?php echo $this->__('Account Name: %s', Mage::helper('twofactorauth/auth')->getStoreName()) ?><br />
+                <?php echo $this->__('Key: ') ?><strong><?php echo $this->getQrCodeSecret() ?></strong><br />
+                <?php echo $this->__('Type: Time-based') ?>
             </div>
-        </fieldset>
-    </form>
+
+            <div id="what-is-this-qr" class="tfa__help" style="display: none;">
+                <p>
+                    <?php echo $this->__('Two-Factor Authentication protects your account from unauthorized access by requiring a second authentication method. In this case the second method is a Time-based One Time Password (TOTP).'); ?>
+                    <?php echo $this->__('Google Authenticator is a general-purpose app which provides TOTP codes. It does not require a Google account, but does require a compatible device. Other TOTP applications compatible with Google Authenticator should work as well.'); ?>
+                </p>
+                <p>
+                    <?php echo $this->__('After the initial setup is complete you will need to use the app to enter the 6-digit TOTP when authenticating on unrecognized computers.'); ?>
+                    <?php echo $this->__('Choosing "Remember Me" will set a cookie which will prevent you from having to enter the TOTP again on this device/browser, but authenticating on other devices/browsers will still require the TOTP.'); ?>
+                </p>
+                <ol>
+                    <li>
+                        <?php echo $this->__('Install Google Authenticator or a similar app if you have not done so already.') ?>
+                        <br/>
+                        <div class="tfa__images">
+                            <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2">
+                                <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" width="129" height="45"/>
+                            </a>
+                            <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8&uo=4"
+                               target="_blank"
+                            >
+                                <img
+                                    src="https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg"
+                                    alt="Test" height="45"/>
+                            </a>
+
+
+                        </div>
+                        <div class="tfa__images">
+                            <a href="http://appworld.blackberry.com/webstore/content/22517879/?countrycode=US&lang=en" target="_blank">BlackBerry</a>
+                            <a href="http://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b" target="_blank">Windows Phone</a>
+                        </div>
+                    </li>
+                    <li><?php echo $this->__('Choose "Set up account" (or equivalent) and either scan the barcode above or click "Enter key manually" to display a key which may be entered using the keyboard.') ?></li>
+                    <li><?php echo $this->__('Enter the 6-digit TOTP code for the newly added account above and click "Save".') ?></li>
+                </ol>
+                <?php echo $this->__('Note: This additional level of security does not replace the need for a strong and secret password and proper precautions to keep your account credentials secure should always be taken seriously.'); ?>
+            </div>
+
+            <p class="legal"><?php echo Mage::helper('adminhtml')->__('Magento is a trademark of Magento Inc. Copyright &copy; %s Magento Inc.', date('Y')); ?></p>
+        </form>
+        <div class="bottom"></div>
+    </div>
 </div>
+
+
 <script type="text/javascript">
 //<![CDATA[
     var loginForm = new varienForm('qrForm');
@@ -155,6 +184,7 @@
             answer.type = 'text';
             answer.value = code;
         }
+
     }
 //]]>
 </script>

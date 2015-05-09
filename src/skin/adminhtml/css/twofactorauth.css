@@ -1,27 +1,65 @@
-/* Setup QR code */
-div#qr { width:850px; margin:170px auto; }
+.tfa{}
 
-div#qr table.qr { width:100%; }
-div#qr table.qr td:first-child { width:220px; }
-div#qr table.qr td:last-child { vertical-align:middle; }
+.tfa__login{ overflow: hidden; }
 
-div#qr table.questions { margin:5px 0; }
-div#qr table.questions tbody td { vertical-align: middle; }
-div#qr table.questions tbody input { width:400px; }
-div#qr table.questions tbody button.generate { margin: 3px; }
+.tfa__login,
+.tfa__help,
+.tfa__manual-key,
+.tfa__questions {
+    width: 580px;
+    background-color: #fff!important;
+    background-image: none!important;
+    border: 2px solid #bbb;
+    border-bottom-color: transparent;
+    overflow: hidden;
+    padding: 20px!important;
+    box-sizing: border-box;
+    text-align: left;
+}
 
-div#qr div.form-buttons { margin:12px 0 0 0; clear:both; text-align:right; }
+.tfa__help { background-color: #e8f0f2!important; }
+.tfa__manual-key { background-color: #f7efe2!important; }
 
-div#qr div.manual-key { padding-top:5px; }
+.tfa__qr { float: left; }
+.tfa__manual-entry { text-align: left; }
 
-div#qr div.remember-me { margin:1em 0; }
 
-div#qr .tfa-help { padding: 10px; background-color: white; border-radius: 10px; box-shadow: 1px 1px 2px #777; margin: 20px; }
-div#qr .tfa-help ol { list-style-type: decimal; margin: 1em 2em; }
+.tfa__info{
+    float: left;
+    max-width: 300px;
+    margin-left: 20px;
+    text-align: left;
+}
 
-/* Edit 2FA */
-div#qr.qr-edit { margin:0; }
+.tfa__label { font-weight: normal; overflow: hidden; }
+.tfa__label label { float: left; font-size: 1.5em; line-height: 2.5em; }
+.tfa__label a { float: right; }
 
-/* Interstitial Page */
-body#page-login div.account-name { padding-bottom:5px; }
-body#page-login input#input_code { width:461px; }
+.tfa__input-text {
+    padding: 5px 10px !important;
+    font-size: 1.5em!important;
+    margin-bottom: 10px;
+}
+
+.tfa__images {
+    text-align: center;
+    margin: 30px 0 10px;
+}
+
+.tfa__images a {
+    display: inline-block;
+    height: 45px;
+    min-height: 45px;
+    line-height: 45px;
+    margin: 0 10px;
+}
+
+.tfa__buttons {
+    clear: both;
+    float: left;
+    margin: 20px 0 0;
+    width: 100%;
+}
+
+.tfa__buttons a { margin-right: 10px; }
+.tfa__buttons button { float: right; }
