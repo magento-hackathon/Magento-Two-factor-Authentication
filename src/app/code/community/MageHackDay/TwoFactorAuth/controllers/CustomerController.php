@@ -66,9 +66,9 @@ class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_
                 ->save();
 
             if ($enable && $code) {
-                Mage::getSingleton('customer/session')->addSuccess($this->__('The subscription has been saved.'));
+                Mage::getSingleton('core/session')->addSuccess($this->__('The subscription has been saved.'));
             } else {
-                Mage::getSingleton('customer/session')->addSuccess($this->__('The subscription has been removed.'));
+                Mage::getSingleton('core/session')->addSuccess($this->__('The subscription has been removed.'));
             }
         }
         catch (MageHackDay_TwoFactorAuth_Model_Exception $e)
