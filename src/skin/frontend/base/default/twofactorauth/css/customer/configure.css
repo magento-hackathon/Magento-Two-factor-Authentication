@@ -1,0 +1,4 @@
+
+.tfa__qr .control { overflow: hidden!important; }
+.tfa__qr label { float: left!important; min-width: 150px!important; margin-right: 20px; }
+.tfa__enable { max-width: 150px!important; }
