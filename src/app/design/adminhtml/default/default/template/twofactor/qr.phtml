@@ -109,10 +109,12 @@
                        onclick="$('what-is-this-q').show(); $(this).hide()"
                        style="font-size: 80%"><?php echo $this->__('What is this?') ?></a>
                 </h3>
-                <div id="what-is-this-q" class="tfa-help" style="display: none;">
-                    <?php echo $this->__('In the case that your TOTP app (e.g. Google Authenticator) becomes inoperable or is inaccessible you may use a secret question/answer pair to bypass the TOTP.'); ?>
-                    <?php echo $this->__('Use only very secure questions and answers, or generate random answers and store them in a secure location and do not store them alongside your full account credentials.'); ?>
-                    <?php echo $this->__('The Answer to the Question will never be stored or displayed in plain-text.'); ?>
+                <div id="what-is-this-q" class="tfa__questions__help" style="display: none;">
+                    <p>
+                        <?php echo $this->__('In the case that your TOTP app (e.g. Google Authenticator) becomes inoperable or is inaccessible you may use a secret question/answer pair to bypass the TOTP.'); ?>
+                        <?php echo $this->__('Use only very secure questions and answers, or generate random answers and store them in a secure location and do not store them alongside your full account credentials.'); ?>
+                        <?php echo $this->__('The Answer to the Question will never be stored or displayed in plain-text.'); ?>
+                    </p>
                 </div>
                 <?php echo $this->getChildHtml('questions') ?>
             </div>
