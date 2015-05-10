@@ -50,11 +50,11 @@ MIT License (MIT)
 
 ##### Step 2 - Link Admin with Google Authenticator - just scan the Barcode
 
-![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Link.png?raw=true)
+![Link account to AuthenticatorApp](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Link.png?raw=true)
 
 ##### Step 3 - Redirect to "Two-Factor Authentication Setup"
 
-![Login](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
+![My Account in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
 
 ##### After inital setup everything is simpler:
 
@@ -64,20 +64,38 @@ MIT License (MIT)
 
 ###### Enter code after Login
 
-![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step4-EnterCodeAfterLogin.png?raw=true)
+![Enter code from Authenticator](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step4-EnterCodeAfterLogin.png?raw=true)
 
 #### Customer-Usage
 
 ##### Step 1 - Customer-Login
 
-![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step1-Login.png?raw=true)
+![Login in customer account](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step1-Login.png?raw=true)
 
-##### Step 2 - Find the link in customer account
+##### Step 2 - Find the menu in customer account
 
-![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step2-FindIt.png?raw=true)
+![Click the link](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step2-FindIt.png?raw=true)
 
-##### Step 3 - Redirect to "Two-Factor Authentication Setup"
+##### Step 3 - activate it for customer
 
-![Login](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
+![Activate Two-Factor-Authentication for customer account](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step3-Link.png?raw=true)
 
+##### After inital setup everything is simpler:
 
+###### Login
+
+![Customer login](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step1-Login.png?raw=true)
+
+###### Enter code after Login
+
+![Enter code from Authenticator](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step4-EnterCodeAfterLogin.png?raw=true)
+
+#### Recovery
+
+##### Reset token for admin-user (other account with access needed of course)
+
+![Reset token for user](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-EditUser.png?raw=true)
+
+##### Reset Token for customer (admin-access needed)
+
+![Reset token for customer](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-EditCustomer.png?raw=true)
