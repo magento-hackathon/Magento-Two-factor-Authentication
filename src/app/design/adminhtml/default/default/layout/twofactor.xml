@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
 <layout>
 
-  <adminhtml_twofactorauth_interstitial>
-    <block type="core/text_list" name="root" output="toHtml">
-      <block type="twofactorauth/adminhtml_interstitial" name="content" template="twofactor/interstitial.phtml">
-        <block type="core/text_list" name="form.additional.info"/>
-      </block>
-    </block>
-  </adminhtml_twofactorauth_interstitial>
+    <adminhtml_twofactorauth_interstitial>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="twofactorauth/adminhtml_interstitial" name="content" template="twofactor/interstitial.phtml">
+                <block type="core/text_list" name="form.additional.info"/>
+            </block>
+        </block>
+    </adminhtml_twofactorauth_interstitial>
 
-  <adminhtml_twofactorauth_qr>
-    <block type="core/text_list" name="root" output="toHtml">
-      <block type="twofactorauth/adminhtml_qr" name="content" template="twofactor/qr.phtml">
-        <block type="twofactorauth/adminhtml_questions" name="questions"/>
-      </block>
-    </block>
-  </adminhtml_twofactorauth_qr>
+    <adminhtml_twofactorauth_qr>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="twofactorauth/adminhtml_qr" name="content" template="twofactor/qr.phtml">
+                <block type="twofactorauth/adminhtml_questions" name="questions"/>
+            </block>
+        </block>
+    </adminhtml_twofactorauth_qr>
 
-  <adminhtml_twofactorauth_question>
-    <block type="core/text_list" name="root" output="toHtml">
-      <block type="twofactorauth/adminhtml_question" name="content" template="twofactor/question.phtml">
-        <block type="core/text_list" name="form.additional.info"/>
-      </block>
-    </block>
-  </adminhtml_twofactorauth_question>
+    <adminhtml_twofactorauth_question>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="twofactorauth/adminhtml_question" name="content" template="twofactor/question.phtml">
+                <block type="core/text_list" name="form.additional.info"/>
+            </block>
+        </block>
+    </adminhtml_twofactorauth_question>
 
-  <adminhtml_twofactorauth_edit>
-    <reference name="head">
-      <action method="addItem">
-        <type>skin_css</type>
-        <name>twofactorauth.css</name>
-      </action>
-    </reference>
-    <reference name="content">
-      <block type="twofactorauth/adminhtml_edit"/>
-    </reference>
-  </adminhtml_twofactorauth_edit>
+    <adminhtml_twofactorauth_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>twofactorauth.css</name>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="twofactorauth/adminhtml_edit"/>
+        </reference>
+    </adminhtml_twofactorauth_edit>
 
-  <adminhtml_permissions_user_edit>
-    <reference name="before_body_end">
-      <block type="core/template" name="hackathon.resetbutton" as="hackathon_resetbutton"
-             template="twofactor/resetbutton_user_edit.phtml"/>
-    </reference>
-  </adminhtml_permissions_user_edit>
+    <adminhtml_permissions_user_edit>
+        <reference name="before_body_end">
+            <block type="core/template" name="hackathon.resetbutton" as="hackathon_resetbutton"
+                   template="twofactor/resetbutton_user_edit.phtml"/>
+        </reference>
+    </adminhtml_permissions_user_edit>
 
 </layout>
