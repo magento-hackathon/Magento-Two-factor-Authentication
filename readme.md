@@ -50,11 +50,11 @@ MIT License (MIT)
 
 ##### Step 2 - Link Admin with Google Authenticator - just scan the Barcode
 
-![Link account to AuthenticatorApp](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Link.png?raw=true)
+![Link account to AuthenticatorApp](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step2-Link.png?raw=true)
 
 ##### Step 3 - Redirect to "Two-Factor Authentication Setup"
 
-![My Account in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
+![My Account in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step3-MyUser.png?raw=true)
 
 ##### After inital setup everything is simpler:
 
