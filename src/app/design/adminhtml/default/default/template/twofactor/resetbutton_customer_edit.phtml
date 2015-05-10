@@ -1,0 +1,15 @@
+<button id="reset_on_useredit" title="<?php echo $this->__("Reset customer authentication"); ?>" type="button"
+  class="scalable delete"
+  onclick="deleteConfirm('Are you sure you want to do this?', '<?php
+    echo Mage::helper("adminhtml")->getUrl('adminhtml/twofactorauth/resetcustomertoken',
+      array('customer_id' => Mage::app()->getRequest()->getParam('id'))
+    ); ?>')"
+  style=""><span><span><span><?php echo $this->__("Reset user authentication"); ?></span></span></span></button>
+<script type="text/javascript">
+  var area = $$("#content > div > div.content-header > .form-buttons");
+  var button = $("reset_on_useredit");
+  if (area.length == 1)
+  {
+    area[0].appendChild(button);
+  }
+</script>
