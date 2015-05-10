@@ -1,5 +1,4 @@
 .tfa{}
-
 .tfa__login{ overflow: hidden; }
 
 .tfa__login,
@@ -17,49 +16,26 @@
     text-align: left;
 }
 
-.tfa__help { background-color: #e8f0f2!important; }
+.tfa__help { background-color: #e8f0f2!important; margin-bottom: 20px; }
+.tfa__questions__help { margin-bottom: 20px; }
+.tfa__questions .h3 { margin-bottom: 10px; }
+.tfa__questions .grid table { margin-bottom: 20px; }
 .tfa__manual-key { background-color: #f7efe2!important; }
 
 .tfa__qr { float: left; }
 .tfa__manual-entry { text-align: left; }
 
-
-.tfa__info{
-    float: left;
-    max-width: 300px;
-    margin-left: 20px;
-    text-align: left;
-}
+.tfa__info{ float: left; max-width: 300px; margin-left: 20px; text-align: left; }
 
 .tfa__label { font-weight: normal; overflow: hidden; }
 .tfa__label label { float: left; font-size: 1.5em; line-height: 2.5em; }
 .tfa__label a { float: right; }
 
-.tfa__input-text {
-    padding: 5px 10px !important;
-    font-size: 1.5em!important;
-    margin-bottom: 10px;
-}
+.tfa__input-text { padding: 5px 10px !important; font-size: 1.5em!important; margin-bottom: 10px; }
 
-.tfa__images {
-    text-align: center;
-    margin: 30px 0 10px;
-}
+.tfa__images { text-align: center; margin: 30px 0 10px; }
+.tfa__images a { display: inline-block; height: 45px; min-height: 45px; line-height: 45px; margin: 0 10px; }
 
-.tfa__images a {
-    display: inline-block;
-    height: 45px;
-    min-height: 45px;
-    line-height: 45px;
-    margin: 0 10px;
-}
-
-.tfa__buttons {
-    clear: both;
-    float: left;
-    margin: 20px 0 0;
-    width: 100%;
-}
-
+.tfa__buttons { clear: both; float: left; margin: 20px 0 0; width: 100%; }
 .tfa__buttons a { margin-right: 10px; }
 .tfa__buttons button { float: right; }
