@@ -39,3 +39,45 @@ This project was initiated at the Magento Worldwide Online Hackathon, Januar 201
 ### License
 
 MIT License (MIT)
+
+### Fancy Images
+
+#### Admin-Usage
+
+##### Step 1 - Login in Admin-Panel
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Login.png?raw=true)
+
+##### Step 2 - Link Admin with Google Authenticator - just scan the Barcode
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Link.png?raw=true)
+
+##### Step 3 - Redirect to "Two-Factor Authentication Setup"
+
+![Login](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
+
+##### After inital setup everything is simpler:
+
+###### Login
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step1-Login.png?raw=true)
+
+###### Enter code after Login
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-Step4-EnterCodeAfterLogin.png?raw=true)
+
+#### Customer-Usage
+
+##### Step 1 - Customer-Login
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step1-Login.png?raw=true)
+
+##### Step 2 - Find the link in customer account
+
+![Login in Admin](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Customer-Step2-FindIt.png?raw=true)
+
+##### Step 3 - Redirect to "Two-Factor Authentication Setup"
+
+![Login](https://github.com/magento-hackathon/Magento-Two-factor-Authentication/blob/readme-images/readme-images/Admin-MyUser.png?raw=true)
+
+
