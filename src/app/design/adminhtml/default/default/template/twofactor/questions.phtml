@@ -25,19 +25,31 @@
                     <?php $type = ($field == 'question') ? 'type' : 'password' ?>
                     <?php $class = ($i == 0) ? ' required-entry ' : '' ?>
                     <td>
-                        <input type="<?php echo $type ?>" name="<?php echo $name ?>" value="<?php echo $value ?>" class="input-text <?php echo $class ?>" maxlength="100" />
+                        <input type="<?php echo $type ?>"
+                               name="<?php echo $name ?>"
+                               value="<?php echo $value ?>"
+                               class="input-text <?php echo $class ?>"
+                               maxlength="100" />
                     </td>
                 <?php endforeach; ?>
                 <td>
-                    <button class="generate" onclick="generateOneTimeAnswer(<?php echo json_encode($i) ?>);" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Generate'); ?></span></span></span></button>
+                    <button class="generate" onclick="generateOneTimeAnswer(<?php echo json_encode($i) ?>);" type="button">
+                        <span><span><span>
+                            <?php echo Mage::helper('twofactorauth')->__('Generate random question/answer'); ?>
+                        </span></span></span>
+                    </button>
                 </td>
             </tr>
         <?php endfor; ?>
         </tbody>
     </table>
     <p class="nm">
-        <small><?php echo Mage::helper('twofactorauth')->__('Maximum length for the questions and answers is 100 symbols. At least one secret question is required.') ?></small><br/>
-        <small><?php echo Mage::helper('twofactorauth')->__('One Time Secret Question should be recorded somewhere for safe-keeping.') ?></small>
+        <small>
+            <?php echo Mage::helper('twofactorauth')->__('Maximum length for the questions and answers is 100 symbols. At least one secret question is required.') ?>
+        </small><br/>
+        <small>
+            <?php echo Mage::helper('twofactorauth')->__('One Time Secret Question should be recorded somewhere for safe-keeping.') ?>
+        </small>
     </p>
 </div>
 <script type="text/javascript">

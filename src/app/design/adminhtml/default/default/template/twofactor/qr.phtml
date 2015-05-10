@@ -63,7 +63,10 @@
             </fieldset>
 
             <?php if ($this->getUser()->getTwofactorToken()): // Display reset link ?>
-                <a href="<?php echo $this->getUrl('adminhtml/twofactorauth/reset') ?>" title="<?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>"><?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?></a>
+                <a href="<?php echo $this->getUrl('adminhtml/twofactorauth/reset') ?>"
+                   title="<?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>">
+                    <?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>
+                </a>
             <?php else: // Display QR code ?>
 
                 <div class="tfa__login legal">
@@ -79,7 +82,9 @@
                     </div>
                     <div class="tfa__info">
                         <h3 class="tfa__label">
-                            <label for="security_code"><?php echo Mage::helper('twofactorauth')->__('Security Code') ?></label><br />
+                            <label for="security_code">
+                                <?php echo Mage::helper('twofactorauth')->__('Security Code') ?>
+                            </label><br />
                             <a href="javascript:void(0);"
                                onclick="$('what-is-this-qr').show(); $(this).hide()"
                                 ><?php echo $this->__('What is this?') ?></a>
@@ -132,7 +137,7 @@
                 </p>
                 <p>
                     <?php echo $this->__('After the initial setup is complete you will need to use the app to enter the 6-digit TOTP when authenticating on unrecognized computers.'); ?>
-                    <?php echo $this->__('Choosing "Remember Me" will set a cookie which will prevent you from having to enter the TOTP again on this device/browser, but authenticating on other devices/browsers will still require the TOTP.'); ?>
+                    <?php echo $this->__('Choosing <em>Remember Me</em> will set a cookie which will prevent you from having to enter the TOTP again on this device/browser, but authenticating on other devices/browsers will still require the TOTP.'); ?>
                 </p>
                 <ol>
                     <li>
@@ -157,8 +162,8 @@
                             <a href="http://www.windowsphone.com/en-us/store/app/authenticator/e7994dbc-2336-4950-91ba-ca22d653759b" target="_blank">Windows Phone</a>
                         </div>
                     </li>
-                    <li><?php echo $this->__('Choose "Set up account" (or equivalent) and either scan the barcode above or click "Enter key manually" to display a key which may be entered using the keyboard.') ?></li>
-                    <li><?php echo $this->__('Enter the 6-digit TOTP code for the newly added account above and click "Save".') ?></li>
+                    <li><?php echo $this->__('Choose <em>Set up account</em> (or equivalent) and either scan the barcode above or click <em>Enter key manually</em> to display a key which may be entered using the keyboard.') ?></li>
+                    <li><?php echo $this->__('Enter the 6-digit TOTP code for the newly added account above and click <em>Save</em>.') ?></li>
                 </ol>
                 <?php echo $this->__('Note: This additional level of security does not replace the need for a strong and secret password and proper precautions to keep your account credentials secure should always be taken seriously.'); ?>
             </div>
