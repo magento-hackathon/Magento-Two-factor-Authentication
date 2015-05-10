@@ -44,4 +44,11 @@
         </reference>
     </adminhtml_permissions_user_edit>
 
+  <adminhtml_customer_edit>
+    <reference name="before_body_end">
+      <block type="core/template" name="hackathon.resetbutton" as="hackathon_resetbutton"
+             template="twofactor/resetbutton_customer_edit.phtml"/>
+    </reference>
+  </adminhtml_customer_edit>
+
 </layout>

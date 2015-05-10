@@ -25,6 +25,39 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
       $this->_redirect('adminhtml/index');
     }
 
+    public function resetcustomertokenAction()
+    {
+      $loggedIn = Mage::getSingleton('admin/session')->isLoggedIn();
+      $customerId = Mage::app()->getRequest()->getParam("customer_id");
+
+      if ( !$loggedIn || empty($customerId) )
+      {
+        $this->_redirect('*');
+        return;
+      }
+
+      $customer = Mage::getModel('customer/customer')->load($customerId);
+      if ( !$customer->getId() )
+      {
+        Mage::getSingleton('adminhtml/session')->addError( $this->__("Customer not found") );
+        $this->_redirect('adminhtml/customer/index');
+        return;
+      }
+
+      try
+      {
+        $customer->setTwofactorauthToken(null);
+        $customer->save();
+        Mage::getSingleton('adminhtml/session')->addSuccess( $this->__("Token resetted") );
+      }
+      catch (Mage_Exception $e)
+      {
+        Mage::getSingleton('adminhtml/session')->addError( $this->__("Error while saving Customer: %s"), $e->getMessage());
+      }
+
+      $this->_redirect('adminhtml/customer/edit', array('id' => $customerId));
+    }
+
     public function interstitialAction()
     {
         if (Mage::helper('twofactorauth/auth')->isAuthorized($this->_getUser())) {

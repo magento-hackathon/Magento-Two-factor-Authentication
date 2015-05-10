@@ -9,10 +9,10 @@
     <div class="fieldset">
         <?php echo $this->getBlockHtml('formkey')?>
         <h2 class="legend"><?php echo $this->__('Settings') ?></h2>
-        <ul class="form-list">
+        <ul class="form-list tfa__qr">
             <li class="control">
-                <label for="subscription"><?php echo $this->__('Enable') ?></label>
-                <select name="enabled" id="twofactorauth-enabled">
+                <label for="enabled"><?php echo $this->__('Enable') ?></label>
+                <select name="enabled" id="twofactorauth-enabled" class="tfa__enable">
                     <option value="0"><?php echo $this->__('No'); ?></option>
                     <option value="1" <?php if ($this->isEnabled()) { ?>selected="selected"<?php } ?>><?php echo $this->__('Yes'); ?></option>
                 </select>
@@ -25,13 +25,13 @@
 
             <p><?php echo $this->__('To configure a 2fa app, simply scan the QR code below and enter the code below.'); ?></p>
 
-            <ul class="form-list">
+            <ul class="form-list tfa__qr">
                 <li class="control">
-                    <label for="subscription"><?php echo $this->__('Configure') ?></label>
+                    <label><?php echo $this->__('QR code') ?></label>
                     <img src="<?php echo $this->getQrCodeImageUrl(); ?>" />
                 </li>
                 <li class="control">
-                    <label for="subscription"><?php echo $this->__('Verify Code') ?></label>
+                    <label ><?php echo $this->__('Verification code') ?></label>
                     <input type="text" name="code" value="" />
                 </li>
             </ul>
