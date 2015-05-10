@@ -58,7 +58,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer
 
         if ($bTfaRequired) {
             $oResponse = Mage::app()->getResponse();
-            if ( ! $user->getTwofactorToken()) {
+            if (!$user->getTwofactorToken()) {
                 $this->_getAdminhtmlSession()->setTfaNotAssociated(TRUE);
                 $vRedirectUrl = Mage::helper('adminhtml')->getUrl('adminhtml/twofactorauth/qr');
             } else {
@@ -86,7 +86,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer
     {
         $request = $observer->getControllerAction()->getRequest();
 
-        if ($request->getActionName() == 'logout' || ! Mage::helper('twofactorauth')->isActive()) {
+        if ($request->getActionName() == 'logout' || !Mage::helper('twofactorauth')->isActive()) {
             return $this;
         }
 
@@ -118,7 +118,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer
      */
     public function customerAuthenticateAfter(Varien_Event_Observer $observer)
     {
-        if (! Mage::helper('twofactorauth')->isActive() || ! Mage::helper('twofactorauth')->isFrontendActive()) {
+        if (!Mage::helper('twofactorauth')->isActive() || !Mage::helper('twofactorauth')->isFrontendActive()) {
             return $this;
         }
         $customer = $observer->getEvent()->getModel();
