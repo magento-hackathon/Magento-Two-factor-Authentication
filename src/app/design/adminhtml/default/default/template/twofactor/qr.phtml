@@ -54,7 +54,7 @@
 
             <fieldset class="login-form">
                 <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>" />
-                <h2 style="text-align:center;"><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication Setup'); ?></h2>
+                <h2><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication Setup'); ?></h2>
 
                 <div id="messages">
                     <?php echo $this->getMessagesBlock()->getGroupedHtml(); ?>
