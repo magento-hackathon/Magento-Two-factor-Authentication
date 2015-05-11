@@ -87,3 +87,4 @@
 "Token resetted", "Token zurückgesetzt"
 "Error while saving Customer: %s","Während des Speichern des Kunden ist ein Fehler aufgetreten: %s"
 "Reset customer authentication","Authentifizierung wurde für Kunden zurückgesetzt"
+"You have enabled Two-Factor Authentication but not entered your code yet.","Sie haben die Zwei-Faktor-Authentifizierung aktiviert, aber den Sicherheitscode noch nicht eingegeben!"
