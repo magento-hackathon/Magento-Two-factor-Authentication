@@ -32,12 +32,10 @@
 "An error occurred while saving your settings.","Beim Speichern der Einstellungen ist ein Fehler aufgetreten."
 "The secret code you entered was invalid. Please try again.","Der eingegebene Bestätigungscode ist ungültig. Bitte versuchen Sie es erneut."
 "abort","abbrechen"
-
 "Enable Two Factor Authentication","Aktiviere Zwei-Faktor-Authentifizierung"
 "Force Two Factor Authentication for all backend users","Erzwinge Zwei-Faktor-Authentifizierung für alle Backendnutzer"
 "Require Two Factor Authentication for all backend users regardless of their permissions.","Erzwinge Zwei-Faktor-Authentifizierung für alle Backendnutzer ohne Rücksicht auf deren tatsächlichen Rechte."
 "Enable Two Factor Authenticator for customers","Aktiviere Zwei-Faktor-AuthentifizierungZwei-Faktor-Authentifizierung für Kunden"
-
 "Please enter Google Authenticator verification code","Bitte Bestätigungscode von Google Authenticator eingeben"
 "Security Code","Bestätigungscode"
 "Use a One Time Security Question","Benutze Einweg-Sicherheitsfrage"
@@ -55,7 +53,6 @@
 "Google Authenticator is a general-purpose app which provides TOTP codes. It does not require a Google account, but does require a compatible device. Other TOTP applications compatible with Google Authenticator should work as well.","Google Authenticator ist eine allgemein verwendbare App, die diese Einmalkennwörter bereitstellt."
 "After the initial setup is complete you will need to use the app to enter the 6-digit TOTP when authenticating on unrecognized computers.","Nach der initialen Einrichtung wird die Authenticator App benötigt, um beim Login von unbekannten Computern einen 6stelliges Einmalkennwort einzugeben."
 "Choosing <em>Remember Me</em> will set a cookie which will prevent you from having to enter the TOTP again on this device/browser, but authenticating on other devices/browsers will still require the TOTP.","Bei der Wahl von <em>Angemeldet bleiben</em> wird ein Cookie gespeichert, welches verhindert, dass in diesem Gerät/Browser weiterhin Einmalkennwörter eingegeben werden müssen. Authentifizierung von anderen Geräten/Browsern werden weiterhin Einmalkennwörter benötigen."
-"After the initial setup is complete you will need to use the app to enter the 6-digit TOTP when authenticating on unrecognized computers.","Nachdem die Einrichtung abgeschlossen wurde, muss die App Google Authenticator benutzt werden, um auf unbekannten Computern ein 6stelliges Einmalkennwort einzugeben."
 "Install Google Authenticator or a similar app if you have not done so already.","Installieren Sie die Google Authenticator App oder eine ähnliche App, sollten Sie dies noch nicht getan haben."
 "Choose <em>Set up account</em> (or equivalent) and either scan the barcode above or click <em>Enter key manually</em> to display a key which may be entered using the keyboard.","Erstellen Sie in der App ein neues Konto (bspw. Menü -> Konto einrichten -> Barcode scannen) und scannen Sie den Barcode oben ein. Alternativ wählen Sie <em>Code manuell eingeben</em> um einen Code zu generieren, den Sie über Ihre Tastatur eingeben können."
 "Enter the 6-digit TOTP code for the newly added account above and click <em>Save</em>.","Geben Sie das 6stellige Einmalkennwort für das neu erstellte Konto ein und klicken Sie auf <em>Speichern</em>."
