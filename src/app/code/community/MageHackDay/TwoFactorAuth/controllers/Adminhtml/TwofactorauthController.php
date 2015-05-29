@@ -46,8 +46,10 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
 
       try
       {
-        $customer->setTwofactorauthToken(null);
-        $customer->save();
+          $customer
+              ->setTwofactorauthToken(null)
+              ->setTwofactorauthEnabled(false)
+              ->save();
         Mage::getSingleton('adminhtml/session')->addSuccess( $this->__("Token resetted") );
       }
       catch (Mage_Exception $e)

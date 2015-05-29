@@ -1,17 +1,23 @@
 <form method="post" action="<?php echo $this->getSaveUrl(); ?>" id="loginForm">
-    <fieldset class="login-form">
+    <div class="fieldset">
         <h2><?php echo Mage::helper('twofactorauth')->__('Two-Factor Authentication'); ?></h2>
+
         <p><?php echo Mage::helper('twofactorauth')->__('Please enter Google Authenticator verification code'); ?></p>
+        <p><?php echo $this->__('If you need help resetting or deactivating the Two-Factor Authentication, please contact the customer support.'); ?></p>
+
         <div class="input-box forgot-password"><label for="email"><?php echo Mage::helper('twofactorauth')->__('Code:'); ?></label><br />
             <input type="text" id="code" name="code" value="" class="required-entry input-text" />
         </div>
         <?php echo $this->getChildHtml('form.additional.info'); ?>
         <div class="clear"></div>
+
         <div class="form-buttons">
             <a class="left" href="<?php echo $this->getUrl('customer/account/login'); ?>">&laquo; <?php echo Mage::helper('twofactorauth')->__('Back to Login'); ?></a>
-            <button class="button" onclick="loginForm.submit()" type="button"><span><span><span><?php echo Mage::helper('twofactorauth')->__('Verify Code'); ?></span></span></span></button>
+            <button class="button" onclick="loginForm.submit()" type="button">
+                <span><span><span><?php echo Mage::helper('twofactorauth')->__('Verify Code'); ?></span></span></span>
+            </button>
         </div>
-    </fieldset>
+    </div>
 </form>
 
 <script type="text/javascript">
