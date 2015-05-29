@@ -98,7 +98,16 @@
                     </twofactorauth_customer_customer_authenticated>
                 </observers>
             </customer_customer_authenticated>
-        </events>
+            <customer_login>
+                <observers>
+                    <twofactorauth_customer_login>
+                        <type>singleton</type>
+                        <class>twofactorauth/observer</class>
+                        <method>customerLogin</method>
+                    </twofactorauth_customer_login>
+                </observers>
+            </customer_login>
+    </events>
         <layout>
             <updates>
                 <twofactorauth>

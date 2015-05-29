@@ -131,4 +131,19 @@ class MageHackDay_TwoFactorAuth_Model_Observer
         }
         return $this;
     }
+
+    /**
+     * @event customer_login
+     * @param Varien_Event_Observer $observer
+     * @return MageHackDay_TwoFactorAuth_Model_Observer
+     */
+    public function customerLogin(Varien_Event_Observer $observer) {
+        if(Mage::helper('twofactorauth')->isFrontendActive()) {
+            //Mage::app()->getResponse()->setRedirect(Mage::getUrl('twofactorauth/customer/configure'));
+
+            $session = Mage::getSingleton('customer/session');
+            $session->setBeforeAuthUrl(Mage::helper('twofactorauth')->getCustomerLoginRedirectUrl());
+
+        }
+    }
 }

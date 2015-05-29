@@ -16,4 +16,8 @@ class MageHackDay_TwoFactorAuth_Helper_Data extends Mage_Core_Helper_Data
     {
         return Mage::getStoreConfigFlag('admin/security/frontend_active');
     }
+
+    public function getCustomerLoginRedirectUrl() {
+        return Mage::getUrl('twofactorauth/customer/configure');
+    }
 }
