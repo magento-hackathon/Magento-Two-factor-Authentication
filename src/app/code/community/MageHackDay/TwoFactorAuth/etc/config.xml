@@ -107,7 +107,15 @@
                     </twofactorauth_customer_login>
                 </observers>
             </customer_login>
-    </events>
+            <controller_action_predispatch>
+                <observers>
+                    <twofactorauth_customer_tfa_enforce>
+                        <class>twofactorauth/observer</class>
+                        <method>checkTfaSubmittedCustomer</method>
+                    </twofactorauth_customer_tfa_enforce>
+              </observers>
+            </controller_action_predispatch>
+        </events>
         <layout>
             <updates>
                 <twofactorauth>
