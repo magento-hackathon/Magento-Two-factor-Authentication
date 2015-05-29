@@ -82,4 +82,21 @@ class MageHackDay_TwoFactorAuth_CustomerController extends Mage_Core_Controller_
 
         $this->_redirect('twofactorauth/customer/configure');
     }
+
+    public function resetAction() {
+        if (!$this->_validateFormKey()) {
+            return $this->_redirect('twofactorauth/customer/configure');
+        }
+
+        $customer = Mage::getSingleton('customer/session')->getCustomer();
+
+        $customer
+            ->setTwofactorauthToken(null)
+            ->setTwofactorauthEnabled(false)
+            ->save();
+
+        Mage::getSingleton('core/session')->addSuccess($this->__('The subscription has been removed.'));
+
+        $this->_redirect('twofactorauth/customer/configure');
+    }
 }

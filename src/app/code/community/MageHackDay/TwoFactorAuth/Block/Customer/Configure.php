@@ -15,6 +15,15 @@ class MageHackDay_TwoFactorAuth_Block_Customer_Configure extends Mage_Core_Block
     }
 
     /**
+     * Get the form reset action
+     *
+     * @return string
+     */
+    public function getResetAction() {
+        return $this->getUrl('*/*/reset');
+    }
+
+    /**
      * Is 2fa enabled for the currently logged in user?
      *
      * @return bool

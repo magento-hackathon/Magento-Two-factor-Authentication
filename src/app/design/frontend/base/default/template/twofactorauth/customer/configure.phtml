@@ -42,8 +42,26 @@
     <?php endif; ?>
 
     <div class="buttons-set">
-         <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
          <button type="submit" title="<?php echo $this->__('Save') ?>" class="button"><span><span><?php echo $this->__('Save') ?></span></span></button>
     </div>
-
 </form>
+
+<form action="<?php echo $this->getResetAction() ?>" method="post" id="twofactorauth-form-reset">
+    <div class="fieldset">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <h2 class="legend"><?php echo $this->__('Reset') ?></h2>
+        <p>
+            <?php echo $this->__('Reset Two-Factor Authentication'); ?>
+        </p>
+        <ul class="form-list tfa__qr">
+            <li class="control">
+                <label for="enabled"><?php echo $this->__('Reset') ?></label>
+                <button type="submit" title="<?php echo $this->__('Reset') ?>" class="button">
+                    <span><span><?php echo $this->__('Reset') ?></span></span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</form>
+
+<p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
