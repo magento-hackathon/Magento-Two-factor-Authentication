@@ -340,7 +340,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     public function resetAction()
     {
         if ( ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
-            $this->_getSession()->addError($this->__('Access Denied.'));
+            $this->_getSession()->addError($this->__('Access Denied. Please reauthenticate with your password.'));
             $this->_redirect('*/*/edit');
             return;
         }
