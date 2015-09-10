@@ -335,39 +335,28 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
     }
 
     /**
-     * Reset Two-Factor Authentication
+     * Reset Two-Factor Authentication for logged-in user
      */
     public function resetAction()
     {
         if ( ! Mage::helper('twofactorauth/auth')->isReAuthenticated()) {
             $this->_getSession()->addError($this->__('Access Denied.'));
-            $this->_redirect('*/*/edit');
+            $this->_redirectReferer();
             return;
         }
 
         if ( ! $this->_getUser()->getTwofactorToken()) {
             $this->_getSession()->addError($this->__('Two-Factor Authentication is not configured so cannot be reset.'));
-            $this->_redirect('*/*/edit');
+            $this->_redirectReferer();
             return;
         }
 
         $resource = Mage::getResourceModel('twofactorauth/user_question');
         try {
             $resource->beginTransaction();
-
-            $userId = $this->getRequest()->getParam('user_id');
-            $user = $this->_getUser();
-            if ( !empty($userId) )
-            {
-                $user = Mage::getModel('admin/user')->load($userId);
-                if ( !$user->getId() )
-                {
-                    return;
-                }
-            }
-            $user->setTwofactorToken(NULL)->save();
-            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($user);
-            $resource->deleteQuestions($user->getId());
+            $this->_getUser()->setTwofactorToken(NULL)->save();
+            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($this->_getUser());
+            $resource->deleteQuestions($this->_getUser()->getId());
             $resource->commit();
             $this->_getSession()->addSuccess($this->__('Two-Factor Authentication has been reset.'));
             Mage::getSingleton('adminhtml/session')->setData('reauthenticated_2fa', FALSE);
@@ -386,6 +375,32 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
 
         $this->_redirect('*');
         return;
+    }
+
+    /**
+     * Reset Two-Factor Authentication for other users
+     */
+    public function resetUserAction()
+    {
+        $user = Mage::getModel('admin/user');
+        $user->load($this->getRequest()->getParam('user_id'));
+        if ( ! $user->getId()) {
+            $this->_getSession()->addError($this->__('That user no longer exists.'));
+            $this->_redirectReferer($this->getUrl('*/permissions_user'));
+        }
+
+        try {
+            $user->getResource()->beginTransaction();
+            $user->setTwofactorToken(NULL)->save();
+            Mage::getResourceModel('twofactorauth/user_cookie')->deleteCookies($user);
+            Mage::getResourceModel('twofactorauth/user_question')->deleteQuestions($user);
+            $user->getResource()->commit();
+        } catch (Exception $e) {
+            $user->getResource()->rollBack();
+            Mage::logException($e);
+            $this->_getSession()->addError($this->__('An unexpected error occurred while resetting 2FA.'));
+        }
+        $this->_redirectReferer($this->getUrl('*/permissions_user'));
     }
 
     /**
@@ -426,6 +441,12 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
      */
     protected function _isAllowed()
     {
+        $action = $this->getRequest()->getActionName();
+
+        if ($action == 'resetUser') {
+            return Mage::getSingleton('admin/session')->isAllowed('system/acl/users');
+        }
+
         if ( ! Mage::helper('twofactorauth')->isForceForBackend()) {
             $isAllowed = Mage::getSingleton('admin/session')->isAllowed('admin/system/myaccount');
             if ( ! $isAllowed) {
@@ -433,7 +454,6 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             }
         }
 
-        $action = $this->getRequest()->getActionName();
         $hasToken = $this->_hasToken();
         $authenticated = $this->_isAuthenticated();
 

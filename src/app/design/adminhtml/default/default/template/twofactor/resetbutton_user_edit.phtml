@@ -1,15 +1,13 @@
-<button id="reset_on_useredit" title="<?php echo $this->__("Reset user authentication"); ?>" type="button"
+<?php $user = Mage::registry('permissions_user'); /* @var $user Mage_Admin_Model_User */ ?>
+<?php if ( ! $user->getTwofactorToken()): return; endif ?>
+<button id="reset_on_useredit" title="<?php echo $this->__('Reset Two-Factor Authentication'); ?>" type="button"
   class="scalable delete"
   onclick="deleteConfirm('Are you sure you want to do this?', '<?php
-    echo Mage::helper("adminhtml")->getUrl('adminhtml/twofactorauth/reset',
-      array('user_id' => Mage::app()->getRequest()->getParam('user_id'))
-    ); ?>')"
-  style=""><span><span><span><?php echo $this->__("Reset user authentication"); ?></span></span></span></button>
+    echo $this->getUrl('adminhtml/twofactorauth/resetUser', ['user_id' => $user->getId()]); ?>')"
+  ><span><?php echo $this->__('Reset Two-Factor Authentication'); ?></span></button>
 <script type="text/javascript">
-  var area = $$("#content > div > div.content-header > .form-buttons");
-  var button = $("reset_on_useredit");
-  if (area.length == 1)
-  {
-    area[0].appendChild(button);
-  }
+    document.observe('dom:loaded', function(){
+        var button = $('reset_on_useredit');
+        $$('button.back:visible:first +  button').invoke('insert', {after: button});
+    });
 </script>
