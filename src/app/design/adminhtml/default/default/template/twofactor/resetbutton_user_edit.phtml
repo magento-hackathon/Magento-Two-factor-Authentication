@@ -3,7 +3,7 @@
 <button id="reset_on_useredit" title="<?php echo $this->__('Reset Two-Factor Authentication'); ?>" type="button"
   class="scalable delete"
   onclick="deleteConfirm('Are you sure you want to do this?', '<?php
-    echo $this->getUrl('adminhtml/twofactorauth/resetUser', ['user_id' => $user->getId()]); ?>')"
+    echo Mage::helper("adminhtml")->getUrl('adminhtml/twofactorauth/resetUser', ['user_id' => $user->getId()]); ?>')"
   ><span><?php echo $this->__('Reset Two-Factor Authentication'); ?></span></button>
 <script type="text/javascript">
     document.observe('dom:loaded', function(){

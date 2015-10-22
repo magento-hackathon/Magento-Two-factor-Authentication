@@ -63,7 +63,7 @@
             </fieldset>
 
             <?php if ($this->getUser()->getTwofactorToken()): // Display reset link ?>
-                <a href="<?php echo $this->getUrl('adminhtml/twofactorauth/reset') ?>"
+                <a href="<?php echo Mage::helper("adminhtml")->getUrl('adminhtml/twofactorauth/reset') ?>"
                    title="<?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>">
                     <?php echo Mage::helper('twofactorauth')->__('Reset Two-Factor Authentication') ?>
                 </a>
