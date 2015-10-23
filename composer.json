@@ -5,10 +5,10 @@
     "homepage":"https://github.com/magento-hackathon/Magento-Two-factor-Authentication",
     "description":"Implementation of an two-factor-authentication using Google's 2-Step Verification algorithm",
     "require":{
-        "magento-hackathon/magento-composer-installer":"*",
-        "ecomdev/ecomdev_phpunit": "*"
+        "magento-hackathon/magento-composer-installer":"*"
     },
   "require-dev": {
+    "ecomdev/ecomdev_phpunit": "*",
     "phpunit/phpunit": "4.6.*"
   }
 }
