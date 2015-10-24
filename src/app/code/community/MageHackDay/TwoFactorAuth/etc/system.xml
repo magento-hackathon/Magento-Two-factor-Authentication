@@ -32,6 +32,13 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </frontend_active>
+                        <remember_me_duration translate="label">
+                            <label>Length in seconds to remember Two Factor Authentication if selected</label>
+                            <comment>Defaults to 30 days. Set to 0 to expire when you close your browser.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </remember_me_duration>
                         <!-- Not yet complete -->
                         <!--<twofactorauth_protected_resources translate="label comment">-->
                             <!--<label>Protected Resources</label>-->
