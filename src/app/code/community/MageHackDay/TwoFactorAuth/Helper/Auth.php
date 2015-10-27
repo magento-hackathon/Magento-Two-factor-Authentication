@@ -117,9 +117,10 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
      * Set 2FA cookie
      *
      * @param string $cookie
+     * @param int $expire Time in seconds until the cookie expires
      * @return void
      */
-    public function setCookie($cookie)
+    public function setCookie($cookie, $expire = null)
     {
         $cookie = (string)$cookie;
         $_cookie = (string)Mage::getSingleton('core/cookie')->get(self::TWO_FACTOR_AUTH_COOKIE);
@@ -132,7 +133,7 @@ class MageHackDay_TwoFactorAuth_Helper_Auth extends Mage_Core_Helper_Abstract
         } else {
             $_cookie = $cookie;
         }
-        Mage::getSingleton('core/cookie')->set(self::TWO_FACTOR_AUTH_COOKIE, $_cookie, time() + 60*60*24*365*10);
+        Mage::getSingleton('core/cookie')->set(self::TWO_FACTOR_AUTH_COOKIE, $_cookie, $expire);
     }
 
     /**

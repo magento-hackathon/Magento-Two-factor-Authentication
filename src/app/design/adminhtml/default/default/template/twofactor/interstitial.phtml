@@ -65,7 +65,7 @@
                 </div>
                 <div>
                     <p><input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label></p>
-                    <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?></p>
+                    <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer for a period of time set by the administrator. (Do not use this feature on public computers.)') ?></p>
                 </div>
                 <?php if ($this->hasSecretQuestion()): ?>
                     <a class="left" href="<?php echo $this->getUrl('adminhtml/twofactorauth/question'); ?>"><?php echo Mage::helper('twofactorauth')->__('Use a One Time Security Question'); ?></a>

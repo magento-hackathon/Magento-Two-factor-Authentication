@@ -93,7 +93,7 @@
                         <input type="text" id="security_code" name="security_code" value="" class="required-entry input-text tfa__input-text" /><br />
                         <div class="remember-me">
                             <p><input type="checkbox" title="<?php echo Mage::helper('twofactorauth')->__('Remember Me') ?>" id="remember-me" name="remember_me" />&nbsp;<label for="remember-me"><?php echo Mage::helper('twofactorauth')->__('Remember Me') ?></label></p>
-                            <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer in the future. (Do not use this feature on public computers.)') ?></p>
+                            <p><?php echo Mage::helper('twofactorauth')->__('Do not require 2-Factor-Authentication on this computer for a period of time set by the administrator. (Do not use this feature on public computers.)') ?></p>
                         </div>
 
                         <input type="hidden" name="qr_secret" value="<?php echo $this->getQrCodeSecret() ?>" />

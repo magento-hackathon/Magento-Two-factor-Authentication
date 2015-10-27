@@ -16,4 +16,9 @@ class MageHackDay_TwoFactorAuth_Helper_Data extends Mage_Core_Helper_Data
     {
         return Mage::getStoreConfigFlag('admin/security/frontend_active');
     }
+
+    public function getRememberMeDuration()
+    {
+        return Mage::getStoreConfig('admin/security/remember_me_duration');
+    }
 }

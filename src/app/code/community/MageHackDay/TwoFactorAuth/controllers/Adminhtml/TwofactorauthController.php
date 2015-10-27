@@ -93,7 +93,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
             try {
                 $cookie = $authHelper->generateCookie();
                 Mage::getResourceModel('twofactorauth/user_cookie')->saveCookie($this->_getUser()->getId(), $cookie);
-                $authHelper->setCookie($cookie);
+                $authHelper->setCookie($cookie, $this->_getCookieExpiry());
             } catch (Exception $e) {
                 Mage::logException($e);
             }
@@ -246,7 +246,7 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
                     try {
                         $cookie = Mage::helper('twofactorauth/auth')->generateCookie();
                         Mage::getResourceModel('twofactorauth/user_cookie')->saveCookie($this->_getUser()->getId(), $cookie);
-                        Mage::helper('twofactorauth/auth')->setCookie($cookie);
+                        Mage::helper('twofactorauth/auth')->setCookie($cookie, $this->_getCookieExpiry());
                     } catch (Exception $e) {
                         Mage::logException($e);
                     }
@@ -501,5 +501,9 @@ class MageHackDay_TwoFactorAuth_Adminhtml_TwofactorauthController extends Mage_A
         }
 
         return !! $user->getTwofactorToken();
+    }
+
+    protected function _getCookieExpiry() {
+        return Mage::helper('twofactorauth')->getRememberMeDuration();
     }
 }
