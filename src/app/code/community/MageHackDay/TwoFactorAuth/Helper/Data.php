@@ -21,4 +21,9 @@ class MageHackDay_TwoFactorAuth_Helper_Data extends Mage_Core_Helper_Data
     {
         return Mage::getStoreConfig('admin/security/remember_me_duration');
     }
+
+    public function getAllowIps()
+    {
+        return Mage::getStoreConfig('admin/security/allow_ips');
+    }
 }

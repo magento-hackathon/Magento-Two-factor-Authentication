@@ -133,6 +133,7 @@
                 <frontend_active>0</frontend_active>
                 <twofactorauth_protected_resources>admin/sales/order,admin/system,all</twofactorauth_protected_resources>
                 <remember_me_duration>2592000</remember_me_duration>
+                <allow_ips></allow_ips>
             </security>
         </admin>
     </default>
