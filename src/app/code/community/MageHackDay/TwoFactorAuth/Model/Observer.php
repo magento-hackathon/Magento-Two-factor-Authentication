@@ -40,7 +40,7 @@ class MageHackDay_TwoFactorAuth_Model_Observer
         }
 
         // check ip bypass
-        $allowIps = explode(',', Mage::helper('twofactorauth')->getAllowIps());
+        $allowIps = Mage::helper('twofactorauth')->getAllowIps();
         $remoteAddr = Mage::helper('core/http')->getRemoteAddr();
         if (in_array($remoteAddr, $allowIps)) {
             return $this;
