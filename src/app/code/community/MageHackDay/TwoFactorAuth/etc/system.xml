@@ -31,6 +31,9 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
                         </frontend_active>
                         <!-- Not yet complete -->
                         <!--<twofactorauth_protected_resources translate="label comment">-->
