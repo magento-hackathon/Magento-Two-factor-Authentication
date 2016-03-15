@@ -24,7 +24,7 @@ class MageHackDay_TwoFactorAuth_Block_Adminhtml_Questions extends Mage_Adminhtml
     public function getItems()
     {
         if ( ! $this->hasData('items')) {
-            $items = [];
+            $items = array();
             $questionsCollection = Mage::getResourceModel('twofactorauth/user_question_collection')->addUserFilter($this->getUser());
             $questionsCollection->setOrder('question_id', 'ASC');
             foreach ($questionsCollection as $question) { /** @var $question MageHackDay_TwoFactorAuth_Model_User_Question */
