@@ -39,6 +39,13 @@ class MageHackDay_TwoFactorAuth_Model_Observer
             return $this;
         }
 
+        // check ip bypass
+        $allowIps = Mage::helper('twofactorauth')->getAllowIps();
+        $remoteAddr = Mage::helper('core/http')->getRemoteAddr();
+        if (in_array($remoteAddr, $allowIps)) {
+            return $this;
+        }
+
         /*
          * If 2FA is not forced for all backend users, check if user has access to protected resources.
          * If user has no access to protected resources, 2FA authentication is not necessary

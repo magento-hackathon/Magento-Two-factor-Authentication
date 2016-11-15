@@ -42,6 +42,15 @@
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                         </remember_me_duration>
+                        <allow_ips translate="label comment">
+                            <label>Allowed IPs (comma separated)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>These IPs will bypass the Two Factor Authentication check</comment>
+                        </allow_ips>
                         <!-- Not yet complete -->
                         <!--<twofactorauth_protected_resources translate="label comment">-->
                             <!--<label>Protected Resources</label>-->
