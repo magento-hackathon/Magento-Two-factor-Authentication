@@ -10,6 +10,9 @@
                             <action>adminhtml/twofactorauth/edit</action>
                             <resource>system/myaccount</resource>
                             <sort_order>10</sort_order>
+                            <depends>
+                                <config>admin/security/active</config>
+                            </depends>
                         </two_factor_auth>
                     </children>
                 </myaccount>
